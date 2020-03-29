@@ -2,6 +2,7 @@ import * as React from 'react';
 
 interface IProps {
   classNames?: string;
+  colors?: string;
 
   title?: string;
   subtitle?: string;
@@ -9,12 +10,15 @@ interface IProps {
 const Button: React.FC<IProps> = props => {
   const { classNames, title, subtitle } = props;
 
+  const colors = props.colors ?? 'bg-blue-600 hover:bg-blue-700';
+
   return (
     <button
-      className={`transition ease-in-out duration-700 text-white font-bold ${classNames} rounded`}
+      className={`${colors} transition ease-in-out duration-700 text-white font-bold ${classNames} rounded`}
     >
-      <p className={'text-3xl'}>{title}</p>
+      {title && <p className={'text-3xl'}>{title}</p>}
       {subtitle && <p className={'text-xl'}>{subtitle}</p>}
+      {props.children && props.children}
     </button>
   );
 };

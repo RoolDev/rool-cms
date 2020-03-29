@@ -10,9 +10,8 @@ const Box: React.FC<IProps> = props => {
 
   return (
     <div
-      className={`bg-center bg-cover shadow ${classNames}`}
+      className={`${classNames}`}
       style={{
-        ...style,
         backgroundImage: `url(${backgroundImage})`
       }}
     >
