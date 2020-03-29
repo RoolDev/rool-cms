@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
  * Components
  */
 import IndexPage from './modules/index/pages/Index';
+import RegisterPage from './modules/index/pages/Register';
 
 /**
  * Styles
@@ -22,7 +23,8 @@ import './assets/main.css';
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <Route path="/" component={IndexPage} />
+      <Route exact path="/" component={IndexPage} />
+      <Route path="/register" component={RegisterPage} />
     </Router>
   </React.StrictMode>,
   document.getElementById('root')

@@ -23,7 +23,7 @@ const Button: React.FC<IProps> = props => {
       className={`${colors} transition ease-in-out duration-700 text-white font-bold ${classNames} rounded`}
     >
       {title && <p className={'text-3xl'}>{title}</p>}
-      {subtitle && <p className={'text-xl'}>{subtitle}</p>}
+      {subtitle && <p className={'hidden md:block text-xl'}>{subtitle}</p>}
       {props.children && props.children}
     </button>
   );
