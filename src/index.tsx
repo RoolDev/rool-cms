@@ -1,12 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import * as React from 'react';
 import * as serviceWorker from './serviceWorker';
+
+import ReactDOM from 'react-dom';
+
+/**
+ * Dependencies
+ */
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+/**
+ * Components
+ */
+import IndexPage from './modules/index/pages/Index';
+
+/**
+ * Styles
+ */
+import './assets/app.scss';
+import './assets/main.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <Route path="/" component={IndexPage} />
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
