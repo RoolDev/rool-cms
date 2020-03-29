@@ -1,6 +1,10 @@
 import * as React from 'react';
 
 interface IProps {
+  type?: 'button' | 'submit' | 'reset';
+
+  onClick?: (data: any) => void;
+
   classNames?: string;
   colors?: string;
 
@@ -14,6 +18,8 @@ const Button: React.FC<IProps> = props => {
 
   return (
     <button
+      onClick={props?.onClick}
+      type={props?.type}
       className={`${colors} transition ease-in-out duration-700 text-white font-bold ${classNames} rounded`}
     >
       {title && <p className={'text-3xl'}>{title}</p>}

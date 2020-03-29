@@ -6,12 +6,13 @@ interface IProps {
   style?: React.CSSProperties;
 }
 const Box: React.FC<IProps> = props => {
-  const { backgroundImage, classNames, style } = props;
+  const { backgroundImage, classNames } = props;
 
   return (
     <div
       className={`${classNames}`}
       style={{
+        ...props.style,
         backgroundImage: `url(${backgroundImage})`
       }}
     >

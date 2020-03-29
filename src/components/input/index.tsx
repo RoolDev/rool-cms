@@ -1,14 +1,22 @@
 import * as React from 'react';
 
 interface IProps {
+  name: string;
   label: string;
   type: string;
-  styles?: {
+
+  value?: string;
+  componentRef?: any;
+
+  error?: string;
+
+  styles?: Partial<{
     containerClassnames: string;
-  };
+    inputClassnames: string;
+  }>;
 }
 const Input: React.FC<IProps> = props => {
-  const { type, label, styles } = props;
+  const { name, type, label, styles } = props;
 
   return (
     <div
@@ -19,9 +27,15 @@ const Input: React.FC<IProps> = props => {
         {label}
       </label>
       <input
-        className="bg-gray-100 text-gray-600 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+        ref={props.componentRef}
+        name={name}
+        className={`bg-gray-100 text-gray-600 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none ${styles?.inputClassnames ??
+          ''} ${props?.error ? 'border-red-400' : ''}`}
         type={type}
       />
+      {props.error && (
+        <p className="text-red-500 text-xs italic">* campo obrigatório.</p>
+      )}
     </div>
   );
 };

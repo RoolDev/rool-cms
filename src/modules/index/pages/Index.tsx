@@ -7,32 +7,29 @@ import './Index.style.scss';
 import Button from '../../../components/button';
 import Input from '../../../components/input';
 
-const logo = require('../../../assets/images/logo.png');
+import { useForm } from 'react-hook-form';
+import Header from '../../../components/header';
+import Container from '../../../components/container';
+
 const backgroundImage = require('../../../assets/images/container-bg-opacity.png');
 
 const IndexPage: React.FC = () => {
+  const { register, handleSubmit, errors } = useForm();
+
+  React.useEffect(() => {
+    console.log('errors: ', errors);
+  }, [errors]);
+
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
+
   return (
     <div className="">
       <div className="flex flex-col items-center justify-center h-screen">
-        <div className="flex flex-col justify-between items-center h-32 md:h-auto md:flex-row md:w-1/2">
-          <div className="md:flex md:flex-1 md:justify-center md:pl-40">
-            <img src={logo} alt="" className="" />
-          </div>
-          <div className="">
-            <div className="font-thin bg-white rounded-full p-3">
-              100 usuários online!
-            </div>
-          </div>
-        </div>
+        <Header />
 
-        <span className="border-b w-1/2 mt-5 mb-5 border-gray-500" />
-
-        <div
-          className="flex flex-col-reverse md:flex-row md:justify-between shadow bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl"
-          style={{
-            height: '500px'
-          }}
-        >
+        <Container>
           <Box
             classNames="md:flex md:flex-col md:justify-center md:justify-evenly lg:w-1/2 bg-cover text-center"
             backgroundImage={backgroundImage}
@@ -56,27 +53,44 @@ const IndexPage: React.FC = () => {
               Um lugar divertido <br /> com gente incrível!
             </div>
 
-            <Input
-              label="E-mail"
-              type="email"
-              styles={{
-                containerClassnames: 'mt-4'
-              }}
-            />
-            <Input
-              label="Senha"
-              type="password"
-              styles={{
-                containerClassnames: 'mt-4'
-              }}
-            />
-            <div className="flex justify-center md:justify-end mt-8">
-              <Button classNames="text-white font-bold py-2 px-4 md:w-1/3 rounded-full">
-                Vamos lá
-              </Button>
-            </div>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Input
+                componentRef={register({ required: true })}
+                name="mail"
+                label="E-mail"
+                type="email"
+                error={errors.mail}
+                styles={{
+                  containerClassnames: 'mt-4'
+                }}
+              />
+
+              <Input
+                componentRef={register({
+                  required: true,
+                  minLength: 6,
+                  maxLength: 30
+                })}
+                name="password"
+                label="Senha"
+                type="password"
+                error={errors.password}
+                styles={{
+                  containerClassnames: 'mt-4'
+                }}
+              />
+
+              <div className="flex justify-center md:justify-end mt-8">
+                <Button
+                  type="submit"
+                  classNames="text-white font-bold py-2 px-4 md:w-1/3 rounded-full"
+                >
+                  Vamos lá
+                </Button>
+              </div>
+            </form>
           </Box>
-        </div>
+        </Container>
       </div>
     </div>
   );
