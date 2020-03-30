@@ -28,7 +28,7 @@ const Routes: React.FC = () => {
       <Route exact path="/login" component={IndexPage} />
       <Route exact path="/register" component={RegisterPage} />
 
-      <PrivateRoute path="/" component={HomeRoutes} />
+      <PrivateRoute path="/home" component={HomeRoutes} />
     </Router>
   );
 };
