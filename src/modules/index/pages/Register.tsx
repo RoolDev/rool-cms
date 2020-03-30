@@ -4,16 +4,16 @@ import * as React from 'react';
  * Dependencies
  */
 import * as AppActions from '../../../App.actions';
+import { useApp } from '../../../App.context';
 import { toast } from 'react-toastify';
 import { useMount } from 'react-use';
 import { useForm } from 'react-hook-form';
-import { useApp } from '../../../App.context';
 import { Link, useHistory } from 'react-router-dom';
 
 /**
  * Components
  */
-import { Mail, Lock } from 'react-feather';
+import { Mail, Lock, User } from 'react-feather';
 import Button from '../../../components/button';
 import Input from '../../../components/input';
 import Box from '../../../components/box';
@@ -24,12 +24,7 @@ import Container from '../../../components/container';
 /**
  * Models
  */
-import { SigninUserDTO } from '../models/signin-user.dto';
-
-/**
- * Styles
- */
-import './Index.style.scss';
+import { CreateUserDTO } from '../models/create-user.dto';
 
 const backgroundImage = require('../../../assets/images/container-bg-opacity.png');
 
@@ -37,14 +32,14 @@ const findErrors = (payload: any): string[] => {
   return payload.map((item: { property: string }) => item.property);
 };
 
-const IndexPage: React.FC = () => {
-  const { register, handleSubmit, errors, setError } = useForm();
+const RegisterPage: React.FC = () => {
+  const { register, handleSubmit, errors, getValues, setError } = useForm();
 
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [isMounting, setIsMounting] = React.useState(true);
-
-  const [state, dispatch] = useApp();
   const history = useHistory();
+  const [state, dispatch] = useApp();
+
+  const [isMounting, setIsMounting] = React.useState<boolean>(true);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   useMount(() => {
     if (state.accessToken) {
@@ -54,13 +49,17 @@ const IndexPage: React.FC = () => {
     setIsMounting(false);
   });
 
-  const onSubmit = async (data: Record<string, string>) => {
+  if (isMounting) {
+    return <LoadingSpinner />;
+  }
+
+  const onSubmit = async (formData: Record<string, string>) => {
     try {
       setIsLoading(true);
 
-      const formData = new SigninUserDTO({ ...data });
+      const data = new CreateUserDTO(formData);
 
-      dispatch(await AppActions.authenticateUser(formData));
+      dispatch(await AppActions.createUser(data));
 
       history.push('/home');
     } catch (e) {
@@ -74,12 +73,8 @@ const IndexPage: React.FC = () => {
     }
   };
 
-  if (isMounting) {
-    return <LoadingSpinner />;
-  }
-
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="w-screen flex flex-col items-center justify-center h-screen">
       <Header />
 
       <Container>
@@ -88,33 +83,47 @@ const IndexPage: React.FC = () => {
           backgroundImage={backgroundImage}
         >
           <p className="hidden text-5xl text-white font-bold font-normal md:block">
-            Bem vindo!
+            Falta pouco!
           </p>
           <p className="hidden text-2xl text-white p-2 md:block md:text-3xl">
-            Um ambiente incrível está a sua espera =)
+            Em alguns segundos você estará se divertindo!
           </p>
           <div className="mt-5 mb-5 md:mt-0 md:mb-0">
-            <Link to={'/register'}>
+            <Link to={'/'}>
               <Button
-                disabled={isLoading}
                 classNames={`w-64 h-24 w-2/3`}
-                title={'Registre-se!'}
-                subtitle={'É de graça!'}
+                title={'Já tem uma conta?'}
+                subtitle={'Faça o login!'}
+                disabled={isLoading}
               />
             </Link>
           </div>
         </Box>
-        <Box classNames="flex flex-col justify-center w-full p-8 md:w-1/2">
-          <div className="mt-10 font-thin text-center md:text-2xl md:mb-5">
-            Um lugar divertido <br /> com gente incrível!
-          </div>
 
+        <Box classNames="flex flex-col justify-center w-full p-8 md:w-1/2">
           <form onSubmit={handleSubmit(onSubmit)}>
             <Input
-              componentRef={register({ required: true })}
+              componentRef={register({
+                required: true,
+                pattern: /^[a-z0-9@_-]{2,20}$/i
+              })}
+              icon={<User />}
+              name="username"
+              label="Usuário"
+              placeholder="Não pode conter caracteres especiais."
+              type="username"
+              error={errors.username}
+              styles={{
+                containerClassnames: 'mt-4'
+              }}
+            />
+
+            <Input
+              componentRef={register({ required: true, maxLength: 25 })}
               icon={<Mail />}
               name="mail"
               label="E-mail"
+              placeholder="Um e-mail válido"
               type="email"
               error={errors.mail}
               styles={{
@@ -131,8 +140,29 @@ const IndexPage: React.FC = () => {
               icon={<Lock />}
               name="password"
               label="Senha"
+              placeholder="Entre 6 e 30 caracteres"
               type="password"
               error={errors.password}
+              styles={{
+                containerClassnames: 'mt-4'
+              }}
+            />
+
+            <Input
+              componentRef={register({
+                required: 'senhas não coincidem!',
+                minLength: 6,
+                maxLength: 30,
+                validate: value => {
+                  return value === getValues().password;
+                }
+              })}
+              icon={<Lock />}
+              name="passwordConfirmation"
+              label="Confirmação da senha"
+              placeholder="Repita a senha"
+              type="password"
+              error={errors.passwordConfirmation}
               styles={{
                 containerClassnames: 'mt-4'
               }}
@@ -154,4 +184,4 @@ const IndexPage: React.FC = () => {
   );
 };
 
-export default IndexPage;
+export default RegisterPage;
