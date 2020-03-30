@@ -63,11 +63,19 @@ const RegisterPage: React.FC = () => {
 
       history.push('/home');
     } catch (e) {
-      findErrors(e.data.message).forEach(property => {
-        setError(property, 'notMatch', '');
-      });
+      if (e?.data) {
+        const { message } = e?.data;
 
-      toast.error(`${e.data.error}`);
+        findErrors(message ?? []).forEach(property => {
+          setError(property, 'notMatch', '');
+        });
+
+        toast.error(`${e.data.error}`);
+      } else {
+        toast.error(
+          'Serviço indisponível no momento. Tente novamente em alguns minutos.'
+        );
+      }
     } finally {
       setIsLoading(false);
     }

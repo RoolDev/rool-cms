@@ -2,6 +2,7 @@
  * Dependencies
  */
 import { AppService } from './index.service';
+import { HomeService } from './modules/home/home.service';
 
 /**
  * Models
@@ -9,6 +10,7 @@ import { AppService } from './index.service';
 import { Action } from './App.context';
 import { SigninUserDTO } from './modules/index/models/signin-user.dto';
 import { CreateUserDTO } from './modules/index/models/create-user.dto';
+import { User } from './modules/index/models/user';
 
 export const createUser = async (formData: CreateUserDTO): Promise<Action> => {
   const { accessToken } = await AppService.createUser(formData);
@@ -52,6 +54,18 @@ export const revalidateToken = async (accessToken: string): Promise<Action> => {
       accessToken,
       user
     }
+  };
+};
+
+export const setAuthTicket = async (
+  user: User,
+  accessToken: string
+): Promise<Action> => {
+  const { auth_ticket } = await HomeService.updateUserSSO(user.id, accessToken);
+
+  return {
+    type: 'setAuthTicket',
+    value: auth_ticket
   };
 };
 
