@@ -6,26 +6,26 @@ import ReactDOM from 'react-dom';
 /**
  * Dependencies
  */
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-
-/**
- * Components
- */
-import IndexPage from './modules/index/pages/Index';
-import RegisterPage from './modules/index/pages/Register';
+import { AppProvider } from './App.context';
+import { ToastContainer, toast } from 'react-toastify';
+import Routes from './Routes';
 
 /**
  * Styles
  */
 import './assets/app.scss';
 import './assets/main.css';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure();
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <Route exact path="/" component={IndexPage} />
-      <Route path="/register" component={RegisterPage} />
-    </Router>
+    <AppProvider>
+      <ToastContainer />
+
+      <Routes />
+    </AppProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

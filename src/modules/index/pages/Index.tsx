@@ -1,26 +1,82 @@
 import * as React from 'react';
 
-import './Index.style.scss';
-import Box from '../../../components/box';
+/**
+ * Dependencies
+ */
+import * as AppActions from '../../../App.actions';
+import { toast } from 'react-toastify';
+import { useMount } from 'react-use';
+import { useForm } from 'react-hook-form';
+import { useApp } from '../../../App.context';
+import { Link, useHistory } from 'react-router-dom';
 
-import './Index.style.scss';
+/**
+ * Components
+ */
+import { Mail, Lock } from 'react-feather';
 import Button from '../../../components/button';
 import Input from '../../../components/input';
-
-import { useForm } from 'react-hook-form';
+import Box from '../../../components/box';
+import LoadingSpinner from '../../../components/spinner';
 import Header from '../../../components/header';
 import Container from '../../../components/container';
-import { Link } from 'react-router-dom';
-import { Mail, Lock } from 'react-feather';
+
+/**
+ * Models
+ */
+import { SigninUserDTO } from '../models/signin-user.dto';
+
+/**
+ * Styles
+ */
+import './Index.style.scss';
 
 const backgroundImage = require('../../../assets/images/container-bg-opacity.png');
 
-const IndexPage: React.FC = () => {
-  const { register, handleSubmit, errors } = useForm();
+const findErrors = (payload: any): string[] => {
+  return payload.map((item: { property: string }) => item.property);
+};
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+const IndexPage: React.FC = () => {
+  const { register, handleSubmit, errors, setError } = useForm();
+
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isMounting, setIsMounting] = React.useState(true);
+
+  const [state, dispatch] = useApp();
+  const history = useHistory();
+
+  useMount(() => {
+    if (state.accessToken) {
+      history.push('/home');
+    }
+
+    setIsMounting(false);
+  });
+
+  const onSubmit = async (data: Record<string, string>) => {
+    try {
+      setIsLoading(true);
+
+      const formData = new SigninUserDTO({ ...data });
+
+      dispatch(await AppActions.authenticateUser(formData));
+
+      history.push('/home');
+    } catch (e) {
+      findErrors(e.data.message).forEach(property => {
+        setError(property, 'notMatch', '');
+      });
+
+      toast.error(`${e.data.error}`);
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  if (isMounting) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
@@ -40,6 +96,7 @@ const IndexPage: React.FC = () => {
           <div className="mt-5 mb-5 md:mt-0 md:mb-0">
             <Link to={'/register'}>
               <Button
+                disabled={isLoading}
                 classNames={`w-64 h-24 w-2/3`}
                 title={'Registre-se!'}
                 subtitle={'É de graça!'}
@@ -83,6 +140,7 @@ const IndexPage: React.FC = () => {
 
             <div className="flex justify-center md:justify-end mt-8">
               <Button
+                disabled={isLoading}
                 type="submit"
                 classNames="text-white font-bold py-2 px-4 md:w-1/3 rounded-full"
               >
