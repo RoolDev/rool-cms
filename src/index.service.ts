@@ -87,13 +87,16 @@ class Service {
   }
 
   async getUserIP(): Promise<string> {
-    const request = await axios.get('https://www.cloudflare.com/cdn-cgi/trace');
+    const { data } = await this.instance.get('/ip');
+    return data.ip;
 
-    let data = request.data.replace(/[\r\n]+/g, '","').replace(/=+/g, '":"');
+    // const request = await axios.get('https://www.cloudflare.com/cdn-cgi/trace');
 
-    data = '{"' + data.slice(0, data.lastIndexOf('","')) + '"}';
+    // let data = request.data.replace(/[\r\n]+/g, '","').replace(/=+/g, '":"');
 
-    return JSON.parse(data).ip;
+    // data = '{"' + data.slice(0, data.lastIndexOf('","')) + '"}';
+
+    // return JSON.parse(data).ip;
   }
 }
 
