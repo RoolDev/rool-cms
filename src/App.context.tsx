@@ -12,7 +12,7 @@ import { User } from './modules/index/models/user';
 /**
  * Types
  */
-type Types = 'setAuth' | 'setUser' | 'setAccessToken';
+type Types = 'setAuth' | 'setUser' | 'setAccessToken' | 'setAuthTicket';
 
 export type Action = {
   type: Types;
@@ -48,6 +48,19 @@ const appReducer = (state: State, action: Action): State => {
         ...state,
         accessToken: action.value,
         accessTokenValidated: true
+      };
+
+    case 'setAuthTicket':
+      if (!state.user) {
+        throw new Error('Usuário não definido no contexto.');
+      }
+
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          auth_ticket: action.value
+        }
       };
 
     default:

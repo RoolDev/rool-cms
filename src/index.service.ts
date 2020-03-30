@@ -2,6 +2,8 @@
  * Dependencies
  */
 import decode from 'jwt-decode';
+import config from './config/config';
+
 import axios, { AxiosInstance } from 'axios';
 
 /**
@@ -97,6 +99,6 @@ class Service {
 
 export const AppService = new Service(
   axios.create({
-    baseURL: 'http://localhost:3001/auth'
+    baseURL: `${config.api.url}/auth`
   })
 );
