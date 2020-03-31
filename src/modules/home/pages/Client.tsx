@@ -16,6 +16,7 @@ import { useApp } from '../../../App.context';
  * Components
  */
 import LoadingSpinner from '../../../components/spinner';
+import RequestFlashPlayer from '../components/RequestFlashPlayer';
 
 /**
  * Styles
@@ -25,6 +26,7 @@ import './Client.style.scss';
 declare global {
   interface Window {
     swfobject: {
+      [key: string]: any;
       embedSWF: any;
     };
   }
@@ -105,7 +107,9 @@ const ClientPage: React.FC = () => {
         <title>Habbo Rool: Jogue agora!</title>
       </Helmet>
 
-      <div id="client"></div>
+      <div id="client">
+        <RequestFlashPlayer />
+      </div>
     </>
   );
 };
