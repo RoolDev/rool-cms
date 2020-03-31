@@ -1502,13 +1502,6 @@
     "@types/history" "*"
     "@types/react" "*"
 
-"@types/react-swf@0.0.33":
-  version "0.0.33"
-  resolved "https://registry.yarnpkg.com/@types/react-swf/-/react-swf-0.0.33.tgz#deea833c11bb2d620659b8fd31f6a3ab49437dd9"
-  integrity sha512-qhU8rOjYxK23Dwk+kmGlG2OcWUWJPlo+9jjm2kyGgQkfX303d+1ADqC17zGBFhVp99YgH2fu/GsPtxE81+6qrg==
-  dependencies:
-    "@types/react" "*"
-
 "@types/react@*", "@types/react@^16.9.0":
   version "16.9.27"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.27.tgz#7fc5db99e3ec3f21735b44d3560cff684856814a"
@@ -9408,11 +9401,6 @@ react-side-effect@^1.1.0:
   integrity sha512-v1ht1aHg5k/thv56DRcjw+WtojuuDHFUgGfc+bFHOWsF4ZK6C2V57DO0Or0GPsg6+LSTE0M6Ry/gfzhzSwbc5w==
   dependencies:
     shallowequal "^1.0.1"
-
-react-swf@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/react-swf/-/react-swf-1.0.7.tgz#5e48603df54a0633355e79235439411e2c6532dc"
-  integrity sha512-qYqcuvUh7WaNpdlkRyac0Vpm64iwnizPzzXfSFm/F6Wxi+drsZTa4PznQFx+YQUFqmJtZ8KhGnnOQfTsnOLvMQ==
 
 react-toastify@^5.5.0:
   version "5.5.0"
