@@ -12,11 +12,13 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import IndexPage from './modules/index/pages/Index';
 import RegisterPage from './modules/index/pages/Register';
 import ClientPage from './modules/home/pages/Client';
+import ClientDevPage from './modules/home/pages/ClientDev';
 
 const HomeRoutes: React.FC = () => {
   return (
     <>
       <Route exact path="/home" component={ClientPage} />
+      <Route exact path="/home-dev" component={ClientDevPage} />
     </>
   );
 };
