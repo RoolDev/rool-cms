@@ -14,15 +14,6 @@ import RegisterPage from './modules/index/pages/Register';
 import ClientPage from './modules/home/pages/Client';
 import ClientDevPage from './modules/home/pages/ClientDev';
 
-const HomeRoutes: React.FC = () => {
-  return (
-    <>
-      <Route exact path="/home" component={ClientPage} />
-      <Route exact path="/home-dev" component={ClientDevPage} />
-    </>
-  );
-};
-
 const Routes: React.FC = () => {
   return (
     <Router>
@@ -30,7 +21,8 @@ const Routes: React.FC = () => {
       <Route exact path="/login" component={IndexPage} />
       <Route exact path="/register" component={RegisterPage} />
 
-      <PrivateRoute path="/home" component={HomeRoutes} />
+      <PrivateRoute path="/home" component={ClientPage} />
+      <PrivateRoute exact path="/home-dev" component={ClientDevPage} />
     </Router>
   );
 };
