@@ -1,8 +1,8 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance } from "axios";
 
-import config from '../../config/config';
+import config from "../../config/config";
 
-import { AppService } from '../../index.service';
+import { AppService } from "../../index.service";
 
 class Service {
   constructor(private instance: AxiosInstance) {}
@@ -31,6 +31,12 @@ class Service {
     } catch (error) {
       throw error.response;
     }
+  }
+
+  async getUsersOnlineCount(): Promise<{ usersOnline: number }> {
+    const request = await this.instance.get<{ usersOnline: number }>("/users");
+
+    return request.data;
   }
 }
 

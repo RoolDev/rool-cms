@@ -33,7 +33,7 @@ export class ClientVarsDTO {
       "Hey! O Rool está carregando, aguarde um pouquinho ;)";
     this[
       "client.starting.revolving"
-    ] = `For science, you monster/Loading funny message... please wait./Would you like fries with that?/Follow the yellow duck./Time is just an illusion./Are we there yet?!/I like your t-shirt./Look left. Look right. Blink twice. Ta da!/It's not you, it's me./Shhh! I'm trying to think here./Loading pixel universe.`;
+    ] = `Pela ciência, seu monstro/Carregando uma mensagem engraçada... por favor aguarde./Gostaria de batatas fritas com isso?/Siga o pato amarelo./Tempo é apenas uma ilusão./Já estamos lá?!/Eu gosto da sua camisa./Olhe para a esquerda. Olhe para a direita. Pisque duas vezes. Ta da!/Não é você, sou eu./Shhh! Eu estou tentando pensar aqui./Carregando o universo do pixels.`;
     this["flash.client.origin"] = "popup";
 
     Object.assign(this, params);
