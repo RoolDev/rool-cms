@@ -1,10 +1,6 @@
 export class ClientVarsDTO {
-  'client.allow.cross.domain': '0' | '1';
-  'client.notify.cross.domain': '0' | '1';
   'connection.info.host': string;
   'connection.info.port': string;
-  'site.url': string;
-  'url.prefix': string;
   'client.reload.url': string;
   'client.fatal.error.url': string;
   'client.connection.failed.url': string;
