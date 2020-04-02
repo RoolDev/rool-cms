@@ -169,7 +169,7 @@ const IndexPage: React.FC = () => {
 
             <div className="flex justify-center md:justify-end mt-8">
               <Button
-                disabled={isLoading}
+                disabled={isLoading || recaptchaToken.length === 0}
                 type="submit"
                 classNames="text-white font-bold py-2 px-4 md:w-1/3 rounded-full"
               >
