@@ -1,3 +1,7 @@
 .blink {
-  animation: flash 5s infinite;
+  -webkit-animation-name: rubberBand;
+  -webkit-animation-duration: 3s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-delay: 2s;
 }

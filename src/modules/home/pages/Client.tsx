@@ -1,27 +1,28 @@
-import * as React from "react";
+import * as React from 'react';
 
 /**
  * Dependencies
  */
-import * as utils from "../utils";
-import * as AppActions from "../../../App.actions";
+import * as utils from '../utils';
+import * as AppActions from '../../../App.actions';
 
-import config from "../../../config/config";
+import config from '../../../config/config';
 
-import { useMount, useUnmount } from "react-use";
-import { Helmet } from "react-helmet";
-import { useApp } from "../../../App.context";
+import { useMount, useUnmount } from 'react-use';
+import { Helmet } from 'react-helmet';
+import { useApp } from '../../../App.context';
 
 /**
  * Components
  */
-import LoadingSpinner from "../../../components/spinner";
-import RequestFlashPlayer from "../components/RequestFlashPlayer";
+import LoadingSpinner from '../../../components/spinner';
+import RequestFlashPlayer from '../components/RequestFlashPlayer';
+import OnlineCounter from '../../../components/online-counter';
 
 /**
  * Styles
  */
-import "./Client.style.scss";
+import './Client.style.scss';
 
 declare global {
   interface Window {
@@ -40,8 +41,8 @@ const ClientPage: React.FC = () => {
 
   useMount(async () => {
     utils.loadDynamicScript({
-      scriptId: "swfobject",
-      url: "assets/client/js/swfobject.js",
+      scriptId: 'swfobject',
+      url: 'assets/client/js/swfobject.js',
       callback: () => {
         setScriptLoaded(true);
       }
@@ -54,7 +55,7 @@ const ClientPage: React.FC = () => {
   });
 
   useUnmount(() => {
-    const el = document.getElementById("swfobject");
+    const el = document.getElementById('swfobject');
     if (el) document.body.removeChild(el);
   });
 
@@ -63,7 +64,7 @@ const ClientPage: React.FC = () => {
 
     if (!state.user?.auth_ticket) return;
     if (!tokenUpdate) return;
-    if (!swfObject || typeof swfObject !== "object" || !swfObject.embedSWF)
+    if (!swfObject || typeof swfObject !== 'object' || !swfObject.embedSWF)
       return;
 
     const settings = utils.generateClientSettings({
@@ -79,12 +80,12 @@ const ClientPage: React.FC = () => {
     });
 
     swfObject.embedSWF(
-      settings.baseSwf + "Habbo.swf",
-      "client",
-      "100%",
-      "100%",
-      "10.0.0",
-      settings.baseSwf + "expressInstall.swf",
+      settings.baseSwf + 'Habbo.swf',
+      'client',
+      '100%',
+      '100%',
+      '10.0.0',
+      settings.baseSwf + 'expressInstall.swf',
       {
         ...vars
       },
@@ -107,6 +108,10 @@ const ClientPage: React.FC = () => {
         <title>Habbo Rool: Jogue agora!</title>
         <script type="text/javascript" src="assets/client/js/habboapi.js" />
       </Helmet>
+
+      <div className="inline float-left m-2">
+        <OnlineCounter mode="client" />
+      </div>
 
       <div id="client">
         <RequestFlashPlayer />

@@ -6,11 +6,20 @@ import * as React from 'react';
 import { HomeService } from '../../modules/home/home.service';
 
 /**
+ * Components
+ */
+import { Users } from 'react-feather';
+
+/**
  * Styles
  */
 import './index.style.scss';
 
-const OnlineCounter: React.FC = () => {
+interface IProps {
+  mode?: 'index' | 'client';
+}
+
+const OnlineCounter: React.FC<IProps> = props => {
   const [onlines, setOnlines] = React.useState<number>();
   const [retry, setRetry] = React.useState<number>(0);
   const [error, setError] = React.useState<Error>();
@@ -39,33 +48,36 @@ const OnlineCounter: React.FC = () => {
   }, [retry]);
 
   return (
-    <div className="flex justify-between px-2 py-2 bg-blue-100 rounded">
-      <p className="flex text-gray-700">
-        <svg
-          className="h2 w-2 text-teal-500 mx-2 blink"
-          viewBox="0 0 8 8"
-          fill="currentColor"
-        >
-          <circle cx="4" cy="4" r="3" />
-        </svg>
-        {error && <>{error.message}</>}
+    <div className="px-2 py-2 border-gray-500 bg-gray-900 border-solid border-2 rounded cursor-default select-none">
+      {props.mode === 'client' ? (
+        <div className="flex items-center justify-center">
+          <Users className="text-white" size={16} />
 
-        {onlines === undefined
-          ? 'Atualizando...'
-          : `${onlines} ${onlines === 1 ? `habbo online` : `habbos online`}!`}
-      </p>
+          {error && <>{error.message}</>}
+
+          <p className="flex text-white mt-1 ml-2">
+            {onlines === undefined ? (
+              <div className="animated ininite pulse">...</div>
+            ) : (
+              <div className="blink">{onlines}</div>
+            )}
+          </p>
+        </div>
+      ) : (
+        <div className="flex">
+          <p className="flex text-gray-700">
+            {error && <>{error.message}</>}
+
+            {onlines === undefined
+              ? 'Atualizando...'
+              : `${onlines} ${
+                  onlines === 1 ? `habbo online` : `habbos online`
+                }!`}
+          </p>
+        </div>
+      )}
     </div>
   );
-
-  // return (
-  //   <div className="font-thin bg-white rounded-full p-3 text-center">
-  //     {error && <>{error.message}</>}
-
-  //     {onlines === undefined
-  //       ? 'Atualizando...'
-  //       : `${onlines} ${onlines === 1 ? `habbo online` : `habbos online`}!`}
-  //   </div>
-  // );
 };
 
 export default OnlineCounter;
