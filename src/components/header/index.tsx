@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { HomeService } from '../../modules/home/home.service';
-import OnlineCounter from '../online-counter';
 
-interface IProps {}
+/**
+ * Dependencies
+ */
+import OnlineCounter from '../online-counter';
 
 const logo = require('../../assets/images/logo.png');
 
+interface IProps {}
 const Header: React.FC<IProps> = props => {
   return (
     <>
