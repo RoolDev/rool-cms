@@ -15,6 +15,7 @@ import Routes from './Routes';
  */
 import './assets/app.scss';
 import './assets/main.css';
+import './assets/animate.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
 toast.configure();
