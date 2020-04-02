@@ -30,6 +30,7 @@ import { SigninUserDTO } from '../models/signin-user.dto';
  * Styles
  */
 import './Index.style.scss';
+import RecaptchaContainer from '../../../components/recaptcha';
 
 const backgroundImage = require('../../../assets/images/container-bg-opacity.png');
 
@@ -42,6 +43,7 @@ const IndexPage: React.FC = () => {
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [isMounting, setIsMounting] = React.useState(true);
+  const [recaptchaToken, setRecaptchaToken] = React.useState<string>('');
 
   const [state, dispatch] = useApp();
   const history = useHistory();
@@ -58,7 +60,7 @@ const IndexPage: React.FC = () => {
     try {
       setIsLoading(true);
 
-      const formData = new SigninUserDTO({ ...data });
+      const formData = new SigninUserDTO({ ...data, recaptchaToken });
 
       dispatch(await AppActions.authenticateUser(formData));
 
@@ -80,6 +82,17 @@ const IndexPage: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const _handleCaptcha = (value: string | null) => {
+    if (recaptchaToken && value === null) return setRecaptchaToken('');
+    if (value === null) return;
+
+    setRecaptchaToken(value);
+  };
+
+  const _handleRecaptchaError = () => {
+    setRecaptchaToken('');
   };
 
   if (isMounting) {
@@ -145,6 +158,14 @@ const IndexPage: React.FC = () => {
                 containerClassnames: 'mt-4'
               }}
             />
+
+            <div className="flex justify-center mt-5">
+              <RecaptchaContainer
+                onErrored={_handleRecaptchaError}
+                onExpired={_handleRecaptchaError}
+                onChange={_handleCaptcha}
+              />
+            </div>
 
             <div className="flex justify-center md:justify-end mt-8">
               <Button

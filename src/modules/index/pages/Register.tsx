@@ -1,32 +1,33 @@
-import * as React from "react";
+import * as React from 'react';
 
 /**
  * Dependencies
  */
-import * as AppActions from "../../../App.actions";
-import { useApp } from "../../../App.context";
-import { toast } from "react-toastify";
-import { useMount } from "react-use";
-import { useForm } from "react-hook-form";
-import { Link, useHistory } from "react-router-dom";
+import * as AppActions from '../../../App.actions';
+import { useApp } from '../../../App.context';
+import { toast } from 'react-toastify';
+import { useMount } from 'react-use';
+import { useForm } from 'react-hook-form';
+import { Link, useHistory } from 'react-router-dom';
 
 /**
  * Components
  */
-import { Mail, Lock, User } from "react-feather";
-import Button from "../../../components/button";
-import Input from "../../../components/input";
-import Box from "../../../components/box";
-import LoadingSpinner from "../../../components/spinner";
-import Header from "../../../components/header";
-import Container from "../../../components/container";
+import { Mail, Lock, User } from 'react-feather';
+import Button from '../../../components/button';
+import Input from '../../../components/input';
+import Box from '../../../components/box';
+import LoadingSpinner from '../../../components/spinner';
+import Header from '../../../components/header';
+import Container from '../../../components/container';
 
 /**
  * Models
  */
-import { CreateUserDTO } from "../models/create-user.dto";
+import { CreateUserDTO } from '../models/create-user.dto';
+import RecaptchaContainer from '../../../components/recaptcha';
 
-const backgroundImage = require("../../../assets/images/container-bg-opacity.png");
+const backgroundImage = require('../../../assets/images/container-bg-opacity.png');
 
 const findErrors = (payload: any): string[] => {
   return payload.map((item: { property: string }) => item.property);
@@ -40,10 +41,11 @@ const RegisterPage: React.FC = () => {
 
   const [isMounting, setIsMounting] = React.useState<boolean>(true);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [recaptchaToken, setRecaptchaToken] = React.useState<string>('');
 
   useMount(() => {
     if (state.accessToken) {
-      history.push("/home");
+      history.push('/home');
     }
 
     setIsMounting(false);
@@ -57,28 +59,39 @@ const RegisterPage: React.FC = () => {
     try {
       setIsLoading(true);
 
-      const data = new CreateUserDTO(formData);
+      const data = new CreateUserDTO({ ...formData, recaptchaToken });
 
       dispatch(await AppActions.createUser(data));
 
-      history.push("/home");
+      history.push('/home');
     } catch (e) {
       if (e?.data) {
         const { message } = e?.data;
 
         findErrors(message ?? []).forEach(property => {
-          setError(property, "notMatch", "");
+          setError(property, 'notMatch', '');
         });
 
         toast.error(`${e.data.error}`);
       } else {
         toast.error(
-          "Serviço indisponível no momento. Tente novamente em alguns minutos."
+          'Serviço indisponível no momento. Tente novamente em alguns minutos.'
         );
       }
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const _handleCaptcha = (value: string | null) => {
+    if (recaptchaToken && value === null) return setRecaptchaToken('');
+    if (value === null) return;
+
+    setRecaptchaToken(value);
+  };
+
+  const _handleRecaptchaError = () => {
+    setRecaptchaToken('');
   };
 
   return (
@@ -97,11 +110,11 @@ const RegisterPage: React.FC = () => {
             Em alguns segundos você estará se divertindo!
           </p>
           <div className="mt-5 mb-5 md:mt-0 md:mb-0">
-            <Link to={"/"}>
+            <Link to={'/'}>
               <Button
                 classNames={`w-64 h-24 w-2/3`}
-                title={"Já tem uma conta?"}
-                subtitle={"Faça o login!"}
+                title={'Já tem uma conta?'}
+                subtitle={'Faça o login!'}
                 disabled={isLoading}
               />
             </Link>
@@ -122,7 +135,7 @@ const RegisterPage: React.FC = () => {
               type="username"
               error={errors.username}
               styles={{
-                containerClassnames: "mt-4"
+                containerClassnames: 'mt-4'
               }}
             />
 
@@ -135,7 +148,7 @@ const RegisterPage: React.FC = () => {
               type="email"
               error={errors.mail}
               styles={{
-                containerClassnames: "mt-4"
+                containerClassnames: 'mt-4'
               }}
             />
 
@@ -152,13 +165,13 @@ const RegisterPage: React.FC = () => {
               type="password"
               error={errors.password}
               styles={{
-                containerClassnames: "mt-4"
+                containerClassnames: 'mt-4'
               }}
             />
 
             <Input
               componentRef={register({
-                required: "senhas não coincidem!",
+                required: 'senhas não coincidem!',
                 minLength: 6,
                 maxLength: 30,
                 validate: value => {
@@ -172,13 +185,21 @@ const RegisterPage: React.FC = () => {
               type="password"
               error={errors.passwordConfirmation}
               styles={{
-                containerClassnames: "mt-4"
+                containerClassnames: 'mt-4'
               }}
             />
 
+            <div className="flex justify-center mt-5">
+              <RecaptchaContainer
+                onErrored={_handleRecaptchaError}
+                onExpired={_handleRecaptchaError}
+                onChange={_handleCaptcha}
+              />
+            </div>
+
             <div className="flex justify-center md:justify-end mt-8">
               <Button
-                disabled={isLoading}
+                disabled={isLoading || recaptchaToken?.length === 0}
                 type="submit"
                 classNames="text-white font-bold py-2 px-4 md:w-1/3 rounded-full"
               >
