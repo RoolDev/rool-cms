@@ -50,16 +50,16 @@ const OnlineCounter: React.FC<IProps> = props => {
   return (
     <div className="px-2 py-2 border-gray-500 bg-gray-900 border-solid border-2 rounded cursor-default select-none">
       {props.mode === 'client' ? (
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center animated pulse slower infinite">
           <Users className="text-white" size={16} />
 
           {error && <>{error.message}</>}
 
           <p className="flex text-white mt-1 ml-2">
             {onlines === undefined ? (
-              <div className="animated ininite pulse">...</div>
+              <div className="">...</div>
             ) : (
-              <div className="blink">{onlines}</div>
+              <div className="">{onlines}</div>
             )}
           </p>
         </div>
