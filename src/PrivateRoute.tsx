@@ -26,8 +26,7 @@ const PrivateRoute: React.FC<any> = ({ component: Component, ...rest }) => {
         dispatch(await AppActions.revalidateToken(state.accessToken));
       }
     } catch (e) {
-      // Remove from storage to avoid trickers
-      window.localStorage.removeItem('accessToken');
+      dispatch(AppActions.removeAccessToken());
     } finally {
       setIsLoading(false);
     }

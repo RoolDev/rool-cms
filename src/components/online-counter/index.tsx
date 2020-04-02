@@ -55,13 +55,13 @@ const OnlineCounter: React.FC<IProps> = props => {
 
           {error && <>{error.message}</>}
 
-          <p className="flex text-white mt-1 ml-2">
+          <div className="flex text-white mt-1 ml-2">
             {onlines === undefined ? (
-              <div className="">...</div>
+              <p className="">...</p>
             ) : (
-              <div className="">{onlines}</div>
+              <p className="">{onlines}</p>
             )}
-          </p>
+          </div>
         </div>
       ) : (
         <div className="px-2 py-2 flex rounded font-thin bg-white rounded-full p-3 text-center">

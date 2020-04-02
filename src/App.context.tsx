@@ -12,7 +12,12 @@ import { User } from './modules/index/models/user';
 /**
  * Types
  */
-type Types = 'setAuth' | 'setUser' | 'setAccessToken' | 'setAuthTicket';
+type Types =
+  | 'setAuth'
+  | 'setUser'
+  | 'setAccessToken'
+  | 'setAuthTicket'
+  | 'removeAccessToken';
 
 export type Action = {
   type: Types;
@@ -42,6 +47,14 @@ const appReducer = (state: State, action: Action): State => {
     case 'setAuth':
       const { accessToken, user } = action.value;
       return { ...state, user, accessToken, accessTokenValidated: true };
+
+    case 'removeAccessToken': {
+      return {
+        ...state,
+        accessToken: undefined,
+        accessTokenValidated: false
+      };
+    }
 
     case 'setAccessToken':
       return {

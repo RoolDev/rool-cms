@@ -69,6 +69,15 @@ export const setAuthTicket = async (
   };
 };
 
+export const removeAccessToken = (): Action => {
+  window.localStorage.removeItem('accessToken');
+
+  return {
+    type: 'removeAccessToken',
+    value: undefined
+  };
+};
+
 export const setAccessToken = (value: string): Action => {
   return {
     type: 'setAccessToken',
