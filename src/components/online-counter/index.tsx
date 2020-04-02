@@ -48,9 +48,9 @@ const OnlineCounter: React.FC<IProps> = props => {
   }, [retry]);
 
   return (
-    <div className="px-2 py-2 border-gray-500 bg-gray-900 border-solid border-2 rounded cursor-default select-none">
+    <div className="px-2 py-2">
       {props.mode === 'client' ? (
-        <div className="flex items-center justify-center animated pulse slower infinite">
+        <div className="flex items-center justify-center animated pulse slower infinite border-gray-500 bg-gray-900 border-solid border-2 cursor-default select-none">
           <Users className="text-white" size={16} />
 
           {error && <>{error.message}</>}
@@ -64,7 +64,7 @@ const OnlineCounter: React.FC<IProps> = props => {
           </p>
         </div>
       ) : (
-        <div className="flex">
+        <div className="flex rounded font-thin bg-white rounded-full p-3 text-center">
           <p className="flex text-gray-700">
             {error && <>{error.message}</>}
 
