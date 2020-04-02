@@ -68,8 +68,6 @@ export const generateClientVars = ({
   const vars: ClientVarsDTO = new ClientVarsDTO({
     'connection.info.host': ip,
     'connection.info.port': port,
-    'site.url': settings.url,
-    'url.prefix': settings.url,
     'client.reload.url': `${settings.url}/disconnected`,
     'client.fatal.error.url': `${settings.url}/disconnected`,
     'client.connection.failed.url': `${settings.url}/disconnected`,
