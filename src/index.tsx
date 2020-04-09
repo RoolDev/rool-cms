@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 /**
  * Dependencies
  */
+import * as Sentry from '@sentry/browser';
 import { AppProvider } from './App.context';
 import { ToastContainer, toast } from 'react-toastify';
 import Routes from './Routes';
@@ -19,6 +20,13 @@ import './assets/animate.scss';
 import 'react-toastify/dist/ReactToastify.css';
 
 toast.configure();
+
+if (process.env.NODE_ENV === 'production') {
+  Sentry.init({
+    dsn:
+      'https://3aef0af80bfa449abedcdbce7d682ca2@o375600.ingest.sentry.io/5195439',
+  });
+}
 
 ReactDOM.render(
   <React.StrictMode>

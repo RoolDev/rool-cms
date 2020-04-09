@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@sentry/browser": "^5.15.4",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -15,6 +16,7 @@
     "jwt-decode": "^2.2.0",
     "node-sass": "^4.13.1",
     "react": "^16.13.1",
+    "react-adsense": "^0.1.0",
     "react-dom": "^16.13.1",
     "react-feather": "^2.0.3",
     "react-google-recaptcha": "^2.0.1",
