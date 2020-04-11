@@ -48,6 +48,12 @@ const ClientPage: React.FC = () => {
       },
     });
 
+    utils.loadDynamicScript({
+      scriptId: 'habboapi',
+      url: 'assets/client/js/habboapi.js',
+      callback: () => {},
+    });
+
     if (state.user && state.accessToken) {
       dispatch(await AppActions.setAuthTicket(state.user, state.accessToken));
       setTokenUpdated(true);
@@ -55,8 +61,11 @@ const ClientPage: React.FC = () => {
   });
 
   useUnmount(() => {
-    const el = document.getElementById('swfobject');
-    if (el) document.body.removeChild(el);
+    const swfobject = document.getElementById('swfobject');
+    const habboapi = document.getElementById('habboapi');
+
+    if (swfobject) swfobject.parentNode?.removeChild(swfobject);
+    if (habboapi) habboapi.parentNode?.removeChild(habboapi);
   });
 
   React.useEffect(() => {
@@ -103,10 +112,9 @@ const ClientPage: React.FC = () => {
   }
 
   return (
-    <>
+    <div id="game-client">
       <Helmet>
         <title>Habbo Rool: Jogue agora!</title>
-        <script type="text/javascript" src="assets/client/js/habboapi.js" />
       </Helmet>
 
       <div className="inline float-left m-2">
@@ -116,7 +124,7 @@ const ClientPage: React.FC = () => {
       <div id="client">
         <RequestFlashPlayer />
       </div>
-    </>
+    </div>
   );
 };
 
