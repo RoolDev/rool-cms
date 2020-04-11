@@ -45,10 +45,10 @@ const ClientPage: React.FC = () => {
       url: 'assets/client/js/swfobject.js',
       callback: () => {
         setScriptLoaded(true);
-      }
+      },
     });
 
-    if (state.user && state.accessToken && !state.user?.auth_ticket) {
+    if (state.user && state.accessToken) {
       dispatch(await AppActions.setAuthTicket(state.user, state.accessToken));
       setTokenUpdated(true);
     }
@@ -69,14 +69,14 @@ const ClientPage: React.FC = () => {
 
     const settings = utils.generateClientSettings({
       url: config.url!,
-      swfUrl: config.swf.url!
+      swfUrl: config.swf.url!,
     });
 
     const vars = utils.generateClientVars({
       settings,
       ssoTicket: state.user.auth_ticket,
       ip: config.server.ip!,
-      port: config.server.port!
+      port: config.server.port!,
     });
 
     swfObject.embedSWF(
@@ -87,10 +87,10 @@ const ClientPage: React.FC = () => {
       '10.0.0',
       settings.baseSwf + 'expressInstall.swf',
       {
-        ...vars
+        ...vars,
       },
       {
-        ...settings.params
+        ...settings.params,
       },
       null
     );
