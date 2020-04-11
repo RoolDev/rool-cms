@@ -6,7 +6,7 @@ const InfoBoxWidget: React.FC<IProps> = (props) => {
   const { children } = props;
 
   return (
-    <div className="w-max max-h-full bg-sGray border-dGray flex justify-evenly border">
+    <div className="w-max max-h-full bg-sGray flex justify-evenly">
       {children}
     </div>
   );
