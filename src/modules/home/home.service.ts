@@ -8,7 +8,7 @@ import { AppService } from '../../index.service';
 /**
  * Models
  */
-import { IUserDetails } from './models/user-details';
+import { IUserDetails, IUserCurrencies } from './models/user-details';
 
 class Service {
   constructor(private instance: AxiosInstance) {}
@@ -48,12 +48,33 @@ class Service {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      const user = new IUserDetails({ ...request.data });
+      const { data } = request;
+
+      const currencies = this.parseCurrencies(data.currencies);
+      const user = new IUserDetails({ ...request.data, currencies });
 
       return user;
     } catch (error) {
       throw error.response;
     }
+  }
+
+  private parseCurrencies(
+    currencies: { type: number; amount: number }[]
+  ): IUserCurrencies {
+    const result: any = currencies.reduce((prev, cur) => {
+      const { type, amount } = cur;
+
+      const nObj = {
+        [type === 0 ? `DUCKETS` : `DIAMONDS`]: {
+          amount,
+        },
+      };
+
+      return { ...prev, ...nObj };
+    }, {});
+
+    return result;
   }
 }
 

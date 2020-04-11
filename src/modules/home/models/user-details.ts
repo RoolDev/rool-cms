@@ -1,3 +1,12 @@
+export interface IUserCurrencies {
+  DUCKETS: {
+    amount: number;
+  };
+  DIAMONDS: {
+    amount: number;
+  };
+}
+
 export class IUserDetails {
   id!: number;
   username!: string;
@@ -9,6 +18,9 @@ export class IUserDetails {
   points!: number;
   online!: '0' | '1';
   look!: string;
+  last_online!: number;
+
+  currencies!: IUserCurrencies;
 
   // From JWT
   isAdmin!: boolean;
