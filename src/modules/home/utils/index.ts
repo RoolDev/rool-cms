@@ -4,7 +4,7 @@ import { ClientVarsDTO } from '../models/client-vars.dto';
 export const loadDynamicScript = ({
   scriptId,
   url,
-  callback
+  callback,
 }: {
   scriptId: string;
   url: string;
@@ -29,7 +29,7 @@ export const loadDynamicScript = ({
 
 export const generateClientSettings = ({
   url,
-  swfUrl
+  swfUrl,
 }: {
   url: string;
   swfUrl: string;
@@ -49,8 +49,8 @@ export const generateClientSettings = ({
       base: `${swfUrl}/gordon/PRODUCTION-201904011212-888653470/`,
       allowScriptAccess: 'always',
       menu: 'false',
-      wmode: 'opaque'
-    }
+      wmode: 'opaque',
+    },
   });
 };
 
@@ -58,7 +58,7 @@ export const generateClientVars = ({
   settings,
   ssoTicket,
   ip,
-  port
+  port,
 }: {
   settings: ClientSettingsDTO;
   ssoTicket: string;
@@ -79,8 +79,25 @@ export const generateClientVars = ({
     'productdata.load.url': settings.productData,
     'furnidata.load.url': settings.furniData,
     'flash.client.url': settings.baseSwf,
-    'sso.ticket': ssoTicket
+    'sso.ticket': ssoTicket,
   });
 
   return vars;
+};
+
+export const animateCSS = (
+  element: HTMLElement,
+  animationName: string,
+  callback?: () => void
+) => {
+  element.classList.add('animated', animationName);
+
+  function handleAnimationEnd() {
+    element.classList.remove('animated', animationName);
+    element.removeEventListener('animationend', handleAnimationEnd);
+
+    if (callback && typeof callback === 'function') callback();
+  }
+
+  element.addEventListener('animationend', handleAnimationEnd);
 };
