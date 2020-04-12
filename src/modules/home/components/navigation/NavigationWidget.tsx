@@ -12,8 +12,8 @@ import NavigationJoinButton from './NavigationJoinButton';
 
 const NavigationWidget: React.FC = () => {
   return (
-    <div className="bg-gray-100 w-full">
-      <div className="bg-white shadow">
+    <div className="bg-gray-100 w-full shadow-2xl">
+      <div className="bg-white">
         <div className="container mx-auto">
           <div className="flex flex-1 items-center">
             <div className="hidden sm:flex sm:items-center w-2/3">

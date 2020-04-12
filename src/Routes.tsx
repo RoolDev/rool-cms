@@ -13,6 +13,17 @@ import IndexPage from './modules/index/pages/Index';
 import RegisterPage from './modules/index/pages/Register';
 import ClientPage from './modules/home/pages/Client';
 import ClientDevPage from './modules/home/pages/ClientDev';
+import NewHome from './modules/home/pages/NewHome';
+
+const PrivateRoutes = () => {
+  return (
+    <>
+      <PrivateRoute exact path="/home" component={NewHome} />
+      <PrivateRoute exact path="/client" component={ClientPage} />
+      <PrivateRoute exact path="/home-dev" component={ClientDevPage} />
+    </>
+  );
+};
 
 const Routes: React.FC = () => {
   return (
@@ -21,8 +32,7 @@ const Routes: React.FC = () => {
       <Route exact path="/login" component={IndexPage} />
       <Route exact path="/register" component={RegisterPage} />
 
-      <PrivateRoute path="/home" component={ClientPage} />
-      <PrivateRoute exact path="/home-dev" component={ClientDevPage} />
+      <PrivateRoute path="/" component={PrivateRoutes} />
     </Router>
   );
 };
