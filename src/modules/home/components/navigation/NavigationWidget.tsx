@@ -3,6 +3,7 @@ import * as React from 'react';
 /**
  * Dependencies
  */
+import { useLocation } from 'react-router-dom';
 
 /**
  * Components
@@ -11,6 +12,8 @@ import NavigationItem from './NavigationItem';
 import NavigationJoinButton from './NavigationJoinButton';
 
 const NavigationWidget: React.FC = () => {
+  const { pathname } = useLocation();
+
   return (
     <div className="bg-gray-100 w-full shadow-2xl">
       <div className="bg-white">
@@ -22,12 +25,14 @@ const NavigationWidget: React.FC = () => {
                 iconUrl="/assets/images/icons/home.png"
                 color="#276749"
                 pathname={'/home'}
+                active={pathname === '/home'}
               />
               <NavigationItem
                 title="Notícias"
                 iconUrl="/assets/images/icons/articles.png"
                 color="#44337a"
                 pathname={'/articles'}
+                active={pathname.includes('/articles')}
               />
             </div>
 

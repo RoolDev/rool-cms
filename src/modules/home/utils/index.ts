@@ -1,5 +1,6 @@
 import { ClientSettingsDTO } from '../models/client-settings.dto';
 import { ClientVarsDTO } from '../models/client-vars.dto';
+import { format } from 'date-fns';
 
 export const loadDynamicScript = ({
   scriptId,
@@ -100,4 +101,8 @@ export const animateCSS = (
   }
 
   element.addEventListener('animationend', handleAnimationEnd);
+};
+
+export const convertTimestampToDate = (created_at: string, params?: string) => {
+  return format(new Date(created_at), params ?? 'dd-MM-Y HH:mm a');
 };
