@@ -37,13 +37,12 @@ const HabboDetailsWidget: React.FC<IProps> = (props) => {
         </p>
 
         <Link
+          className="mt-10 bg-green-700 hover:bg-green-900 text-white font-bold p-4 rounded w-64 text-center"
           to={{
             pathname: '/client',
           }}
         >
-          <button className="mt-10 bg-green-700 hover:bg-green-900 text-white font-bold p-4 rounded w-64">
-            Jogue agora!
-          </button>
+          Jogue agora!
         </Link>
       </div>
 

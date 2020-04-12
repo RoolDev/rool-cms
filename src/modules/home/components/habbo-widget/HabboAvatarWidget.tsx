@@ -14,7 +14,7 @@ const HabboAvatarWidget: React.FC<IProps> = (props) => {
   return (
     <div className="h-40 bg-gray-300 rounded md:m-4 md:w-40 sm:justify-center">
       <img
-        className="fixed p-4"
+        className="absolute p-4"
         src={`/assets/images/icons/${isOnline}.gif`}
         alt="status"
       />
