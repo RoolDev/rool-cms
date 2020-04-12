@@ -18,20 +18,11 @@ import HomeHeader from './modules/home/components/header/HomeHeader';
 import NavigationWidget from './modules/home/components/navigation/NavigationWidget';
 import Articles from './modules/home/pages/Articles';
 
-const PrivateRoutes = () => {
-  return (
-    <>
-      <PrivateRoute exact path="/home" component={NewHome} />
-      <PrivateRoute exact path="/client" component={ClientPage} />
-      <PrivateRoute exact path="/home-dev" component={ClientDevPage} />
-    </>
-  );
-};
-
 const RoutesWithTemplate: React.FC = () => {
   return (
     <Switch>
       <PrivateRoute exact path="/client" component={ClientPage} />
+      <PrivateRoute exact path="/client-dev" component={ClientDevPage} />
 
       <div className="bg-gray-300 w-full min-h-screen m-0">
         <HomeHeader />
