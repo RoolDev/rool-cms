@@ -7,8 +7,11 @@ import ReactDOM from 'react-dom';
  * Dependencies
  */
 import * as Sentry from '@sentry/browser';
+import { client } from './config/graphql';
 import { AppProvider } from './App.context';
 import { ToastContainer, toast } from 'react-toastify';
+import { ApolloProvider } from '@apollo/client';
+
 import Routes from './Routes';
 
 /**
@@ -31,9 +34,11 @@ if (process.env.NODE_ENV === 'production') {
 ReactDOM.render(
   <React.StrictMode>
     <AppProvider>
-      <ToastContainer />
+      <ApolloProvider client={client}>
+        <ToastContainer />
 
-      <Routes />
+        <Routes />
+      </ApolloProvider>
     </AppProvider>
   </React.StrictMode>,
   document.getElementById('root')

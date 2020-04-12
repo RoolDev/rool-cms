@@ -1,16 +1,15 @@
-export class User {
+export class IUserJWTPayload {
   id!: number;
   username!: string;
   mail!: string;
   rank!: number;
-  namedRank!: string;
   isAdmin!: boolean;
   account_created!: number;
 
   // Fetched from API
   auth_ticket!: string;
 
-  constructor(init: User) {
+  constructor(init: IUserJWTPayload) {
     Object.assign(this, init);
   }
 }

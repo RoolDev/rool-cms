@@ -11,7 +11,7 @@ import axios, { AxiosInstance } from 'axios';
  */
 import { SigninUserDTO } from './modules/index/models/signin-user.dto';
 import { CreateUserDTO } from './modules/index/models/create-user.dto';
-import { User } from './modules/index/models/user';
+import { IUserJWTPayload } from './modules/index/models/user-jwt-payload';
 
 class Service {
   constructor(private instance: AxiosInstance) {}
@@ -21,12 +21,12 @@ class Service {
    *
    * @param accessToken string
    */
-  async validateToken(accessToken: string): Promise<User> {
+  async validateToken(accessToken: string): Promise<IUserJWTPayload> {
     const request = await this.instance.post('/validate', {
-      accessToken
+      accessToken,
     });
 
-    return new User({ ...request.data });
+    return new IUserJWTPayload({ ...request.data });
   }
 
   /**
@@ -35,14 +35,14 @@ class Service {
    * @param accessToken string
    * @returns User
    */
-  async decodeJWT(accessToken: string): Promise<User> {
+  async decodeJWT(accessToken: string): Promise<IUserJWTPayload> {
     const decoded: any = decode(accessToken);
 
     if (!decoded) {
       throw new Error('Não foi possível fazer o decode do token.');
     }
 
-    return new User(decoded);
+    return new IUserJWTPayload(decoded);
   }
 
   /**
@@ -59,12 +59,12 @@ class Service {
         '/signup',
         {
           ...user,
-          ip
+          ip,
         }
       );
 
       return {
-        ...data
+        ...data,
       };
     } catch (error) {
       throw error.response;
@@ -79,7 +79,7 @@ class Service {
       );
 
       return {
-        ...data
+        ...data,
       };
     } catch (error) {
       throw error.response;
@@ -94,6 +94,6 @@ class Service {
 
 export const AppService = new Service(
   axios.create({
-    baseURL: `${config.api.url}/auth`
+    baseURL: `${config.api.url}/auth`,
   })
 );
