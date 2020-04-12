@@ -9,8 +9,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 /**
  * Components
  */
-import IndexPage from './modules/index/pages/Index';
-import RegisterPage from './modules/index/pages/Register';
 import ClientPage from './modules/home/pages/Client';
 import ClientDevPage from './modules/home/pages/ClientDev';
 import NewHome from './modules/home/pages/NewHome';
@@ -18,10 +16,21 @@ import HomeHeader from './modules/home/components/header/HomeHeader';
 import NavigationWidget from './modules/home/components/navigation/NavigationWidget';
 import Articles from './modules/home/pages/Articles';
 import Footer from './modules/home/components/footer/Footer';
+import LoginModal from './modules/home/components/login/LoginModal';
+import RegisterModal from './modules/home/components/register/RegisterModal';
 
-const RoutesWithTemplate: React.FC = () => {
+const ModalRoutes: React.FC = () => {
   return (
     <Switch>
+      <Route path="/login" component={LoginModal} />
+      <Route path="/register" component={RegisterModal} />
+    </Switch>
+  );
+};
+
+const Routes: React.FC = () => {
+  return (
+    <Router>
       <PrivateRoute exact path="/client" component={ClientPage} />
       <PrivateRoute exact path="/client-dev" component={ClientDevPage} />
 
@@ -31,24 +40,14 @@ const RoutesWithTemplate: React.FC = () => {
           <NavigationWidget />
 
           <Switch>
-            <PrivateRoute exact path="/home" component={NewHome} />
-            <PrivateRoute exact path="/articles/:slug?" component={Articles} />
+            <Route exact path="/" component={NewHome} />
+            <Route exact path="/articles/:slug?" component={Articles} />
           </Switch>
         </div>
         <Footer />
+
+        <ModalRoutes />
       </div>
-    </Switch>
-  );
-};
-
-const Routes: React.FC = () => {
-  return (
-    <Router>
-      <Route exact path="/" component={IndexPage} />
-      <Route exact path="/login" component={IndexPage} />
-      <Route exact path="/register" component={RegisterPage} />
-
-      <PrivateRoute path="/" component={RoutesWithTemplate} />
     </Router>
   );
 };

@@ -106,3 +106,7 @@ export const animateCSS = (
 export const convertTimestampToDate = (created_at: string, params?: string) => {
   return format(new Date(created_at), params ?? 'dd-MM-Y HH:mm a');
 };
+
+export const findErrors = (payload: any): string[] => {
+  return payload.map((item: { property: string }) => item.property);
+};

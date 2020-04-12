@@ -1,5 +1,10 @@
 import * as React from 'react';
 
+/**
+ * Dependencies
+ */
+import { Link } from 'react-router-dom';
+
 const NotAuthenticatedWidget: React.FC = () => {
   return (
     <div className="md:flex flex-col bg-white  shadow-lg border border-dGray rounded rounded-b-none">
@@ -17,18 +22,28 @@ const NotAuthenticatedWidget: React.FC = () => {
           Um ambiente incrível está a sua espera =)
         </p>
 
-        <button className="bg-green-700 hover:bg-green-900 rounded text-white font-bold py-2 px-4 rounded w-64 h-24 transition ease-in-out duration-300">
+        <Link
+          className="bg-green-700 hover:bg-green-900 rounded text-white font-bold rounded w-64 h-24 transition ease-in-out duration-300 flex justify-center items-center flex-col"
+          to={{
+            pathname: '/register',
+          }}
+        >
           <p className="text-xl">Novo por aqui?!</p>
           <p className="text-sm">Crie uma nova conta!</p>
-        </button>
+        </Link>
 
         <p className="text-white p-2 text-shadow antialiased subpixel-antialiased">
           ou
         </p>
 
-        <button className="bg-blue-600 hover:bg-blue-800 rounded text-white font-bold rounded w-48 h-12 transition ease-in-out duration-300">
+        <Link
+          className="bg-blue-600 hover:bg-blue-800 rounded text-white font-bold rounded w-48 h-12 transition ease-in-out duration-300 flex justify-center items-center flex-col"
+          to={{
+            pathname: '/login',
+          }}
+        >
           <p className="text-base">Acesse sua conta!</p>
-        </button>
+        </Link>
       </div>
     </div>
   );

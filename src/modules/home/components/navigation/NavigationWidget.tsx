@@ -26,8 +26,8 @@ const NavigationWidget: React.FC = () => {
                 title="Início"
                 iconUrl="/assets/images/icons/home.png"
                 color="#276749"
-                pathname={'/home'}
-                active={pathname === '/home'}
+                pathname={'/'}
+                active={pathname === '/'}
               />
               <NavigationItem
                 title="Notícias"
