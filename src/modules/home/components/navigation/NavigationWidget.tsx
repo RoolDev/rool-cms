@@ -4,6 +4,7 @@ import * as React from 'react';
  * Dependencies
  */
 import { useLocation } from 'react-router-dom';
+import { useAppState } from '../../../../App.context';
 
 /**
  * Components
@@ -13,6 +14,7 @@ import NavigationJoinButton from './NavigationJoinButton';
 
 const NavigationWidget: React.FC = () => {
   const { pathname } = useLocation();
+  const { user } = useAppState();
 
   return (
     <div className="bg-gray-100 w-full shadow-2xl">
@@ -42,7 +44,7 @@ const NavigationWidget: React.FC = () => {
                 width: '300px',
               }}
             >
-              <NavigationJoinButton />
+              {user && <NavigationJoinButton />}
             </div>
           </div>
         </div>

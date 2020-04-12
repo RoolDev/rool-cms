@@ -6,15 +6,19 @@ import * as React from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { Link } from 'react-router-dom';
 
+/**
+ * Models
+ */
+import { IUserDetails } from '../../models/user-details';
+
 const ptLocale = require('date-fns/locale/pt-BR');
 
 interface IProps {
-  username: string;
-  lastOnline: number;
+  user: IUserDetails;
 }
 
 const HabboDetailsWidget: React.FC<IProps> = (props) => {
-  const { username, lastOnline } = props;
+  const { username, last_online } = props.user;
 
   const getTimestampDifference = (time: number) => {
     return formatDistanceToNow(new Date(time * 1000), {
@@ -33,7 +37,7 @@ const HabboDetailsWidget: React.FC<IProps> = (props) => {
 
       <div className="flex mt-1 flex-col">
         <p className="font-light">
-          Online pela última vez: {getTimestampDifference(lastOnline)}.
+          Online pela última vez: {getTimestampDifference(last_online)}.
         </p>
 
         <Link

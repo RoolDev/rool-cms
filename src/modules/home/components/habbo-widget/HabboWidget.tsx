@@ -12,27 +12,21 @@ import HabboAvatarWidget from './HabboAvatarWidget';
 import HabboDetailsWidget from './HabboDetailsWidget';
 import InfoBoxWidget from './InfoBoxWidget';
 import InfoBoxWidgetItem from './InfoBoxWidgetItem';
+import NotAuthenticatedWidget from './NotAuthenticatedWidget';
 
 interface IProps {}
 
 const HabboWidget: React.FC<IProps> = (props) => {
   const { user } = useAppState();
 
-  if (!user) return <>Não autenticado</>;
+  if (!user) return <NotAuthenticatedWidget />;
 
   return (
-    <div className="md:flex flex-col bg-white border border-dGray shadow-lg">
+    <div className="md:flex flex-col bg-white border border-dGray shadow-lg rounded rounded-b-none">
       <div className="md:flex p-1">
-        <HabboAvatarWidget
-          username={user.username}
-          look={user.look}
-          online={user.online}
-        />
+        <HabboAvatarWidget user={user} />
 
-        <HabboDetailsWidget
-          username={user.username}
-          lastOnline={user.last_online}
-        />
+        <HabboDetailsWidget user={user} />
       </div>
 
       <InfoBoxWidget>

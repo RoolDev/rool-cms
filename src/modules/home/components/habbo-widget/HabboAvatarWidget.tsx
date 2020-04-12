@@ -1,13 +1,16 @@
 import * as React from 'react';
 
+/**
+ * Models
+ */
+import { IUserDetails } from '../../models/user-details';
+
 interface IProps {
-  look: string;
-  username: string;
-  online: '0' | '1';
+  user: IUserDetails;
 }
 
 const HabboAvatarWidget: React.FC<IProps> = (props) => {
-  const { look, username, online } = props;
+  const { look, username, online } = props.user;
 
   const isOnline = online === '1' ? 'userOnline' : 'userOffline';
 
