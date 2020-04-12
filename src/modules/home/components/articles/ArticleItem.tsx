@@ -3,8 +3,8 @@ import * as React from 'react';
 /**
  * Dependencies
  */
-import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
+import { convertTimestampToDate } from '../../utils';
 
 /**
  * Models
@@ -18,7 +18,7 @@ interface IProps {
 const ArticleItem: React.FC<IProps> = (props) => {
   const { header, created_at, slug } = props.article;
 
-  const createdAt = format(new Date(created_at), 'dd-MM-Y HH:mm a');
+  const createdAt = convertTimestampToDate(created_at);
 
   return (
     <div className="flex flex-row h-16 bg-white hover:bg-gray-200">

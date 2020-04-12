@@ -12,18 +12,21 @@ interface IProps {
   color: string;
 
   pathname: string;
+  active: boolean;
 }
 
 const NavigationItem: React.FC<IProps> = (props) => {
   const element = React.useRef<HTMLDivElement>(null);
 
-  const { iconUrl, title, color, pathname } = props;
+  const { iconUrl, title, color, pathname, active } = props;
 
   return (
     <Link to={{ pathname }}>
       <div
         ref={element}
-        className="border border-dGray bottom hover:bg-sGray cursor-pointer select-none"
+        className={`border border-dGray bottom hover:bg-sGray cursor-pointer select-none ${
+          active ? 'bg-dGray' : ''
+        }`}
         onMouseEnter={(event) => {
           if (element.current) {
             animateCSS(element.current, 'pulse');

@@ -4,4 +4,9 @@ export interface IArticle {
   created_at: string;
   thumbnailURL: string;
   slug: string;
+
+  content: string;
+
+  authorName: string;
+  category: string;
 }

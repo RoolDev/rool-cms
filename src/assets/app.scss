@@ -1,7 +1,13 @@
 html {
   background-color: #f2f6f5;
+  overflow-y: scroll;
 }
 
 * {
   font-family: 'Overpass', sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
 }
