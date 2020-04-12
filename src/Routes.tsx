@@ -17,6 +17,7 @@ import NewHome from './modules/home/pages/NewHome';
 import HomeHeader from './modules/home/components/header/HomeHeader';
 import NavigationWidget from './modules/home/components/navigation/NavigationWidget';
 import Articles from './modules/home/pages/Articles';
+import Footer from './modules/home/components/footer/Footer';
 
 const RoutesWithTemplate: React.FC = () => {
   return (
@@ -24,14 +25,17 @@ const RoutesWithTemplate: React.FC = () => {
       <PrivateRoute exact path="/client" component={ClientPage} />
       <PrivateRoute exact path="/client-dev" component={ClientDevPage} />
 
-      <div className="bg-gray-300 w-full min-h-screen m-0">
-        <HomeHeader />
-        <NavigationWidget />
+      <div className="bg-gray-300 min-h-screen flex flex-col animated fadeIn">
+        <div className="flex-grow">
+          <HomeHeader />
+          <NavigationWidget />
 
-        <Switch>
-          <PrivateRoute exact path="/home" component={NewHome} />
-          <PrivateRoute exact path="/articles/:slug?" component={Articles} />
-        </Switch>
+          <Switch>
+            <PrivateRoute exact path="/home" component={NewHome} />
+            <PrivateRoute exact path="/articles/:slug?" component={Articles} />
+          </Switch>
+        </div>
+        <Footer />
       </div>
     </Switch>
   );
