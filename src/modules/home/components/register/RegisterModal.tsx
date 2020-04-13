@@ -40,7 +40,7 @@ const RegisterModal: React.FC<IProps> = (props) => {
 
   useMount(() => {
     if (state.accessToken) {
-      history.push('/home');
+      history.push('/');
     }
 
     setIsMounting(false);
@@ -58,7 +58,7 @@ const RegisterModal: React.FC<IProps> = (props) => {
 
       dispatch(await AppActions.createUser(data));
 
-      history.push('/home');
+      history.push('/');
     } catch (e) {
       if (e?.data) {
         const { message } = e?.data;
