@@ -113,9 +113,7 @@ const ClientPage: React.FC = () => {
 
   return (
     <div id="game-client">
-      <Helmet>
-        <title>Habbo Rool: Jogue agora!</title>
-      </Helmet>
+      <Helmet title={'Habbo Rool: Jogar!'} />
 
       <div className="inline float-left m-2">
         <OnlineCounter mode="client" />

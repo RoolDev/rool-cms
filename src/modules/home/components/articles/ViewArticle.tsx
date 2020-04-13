@@ -12,13 +12,13 @@ import { GET_ARTICLE_BY_SLUG, GET_LATEST_ARTICLE } from '../../graphql';
 
 import ContentLoader from 'react-content-loader';
 import RenderMD from '../../../../components/md-render';
-
+import ViewArticleBottom from './ViewArticleBottom';
+import ViewArticleHeader from './ViewArticleHeader';
+import Helmet from 'react-helmet';
 /**
  * Models
  */
 import { IArticle } from '../../models/article';
-import ViewArticleBottom from './ViewArticleBottom';
-import ViewArticleHeader from './ViewArticleHeader';
 
 interface IProps {
   slug?: string;
@@ -75,6 +75,8 @@ const ViewArticle: React.FC<IProps> = (props) => {
 
   return (
     <div className="animated fadeIn">
+      <Helmet title={`Habbo Rool: ${article.header}`} />
+
       <div className="bg-white flex flex-col rounded rounded-b-none">
         <ViewArticleHeader article={article} />
         <hr />

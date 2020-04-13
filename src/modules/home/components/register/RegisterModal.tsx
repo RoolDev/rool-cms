@@ -19,6 +19,7 @@ import ModalBody from '../../../../components/modal/modal-body';
 import LoadingSpinner from '../../../../components/spinner';
 import RecaptchaContainer from '../../../../components/recaptcha';
 import Input from '../../../../components/input';
+import Helmet from 'react-helmet';
 import { User, Mail, Lock } from 'react-feather';
 
 /**
@@ -98,6 +99,8 @@ const RegisterModal: React.FC<IProps> = (props) => {
 
   return (
     <Modal>
+      <Helmet title={`Habbo Rool: Criar nova conta!`} />
+
       <ModalBody title="Registre-se!" close={_goBack}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Input

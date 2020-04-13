@@ -19,7 +19,7 @@ import Modal from '../../../../components/modal';
 import RecaptchaContainer from '../../../../components/recaptcha';
 import LoadingSpinner from '../../../../components/spinner';
 import ModalBody from '../../../../components/modal/modal-body';
-
+import Helmet from 'react-helmet';
 import { Lock, Mail } from 'react-feather';
 
 /**
@@ -97,6 +97,8 @@ const LoginModal: React.FC = () => {
 
   return (
     <Modal>
+      <Helmet title={`Habbo Rool: Autentique-se!`} />
+
       <ModalBody title={'Conecte-se'} close={_goBack}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="my-5">
