@@ -4,6 +4,7 @@ import * as React from 'react';
  * Dependencies
  */
 import { animateCSS } from '../../utils';
+import { useHistory } from 'react-router-dom';
 
 /**
  * Components
@@ -12,6 +13,8 @@ import OnlineCounter from '../../../../components/online-counter';
 
 const HomeHeader: React.FC = () => {
   const logoElement = React.useRef<HTMLImageElement>(null);
+
+  const history = useHistory();
 
   return (
     <div
@@ -26,11 +29,14 @@ const HomeHeader: React.FC = () => {
         <div className="flex">
           <div className="flex flex-col items-center justify-center w-2/3">
             <img
-              className="select-none"
+              className="select-none cursor-pointer"
               onMouseEnter={(event) => {
                 if (logoElement.current) {
                   animateCSS(logoElement.current, 'heartBeat');
                 }
+              }}
+              onClick={() => {
+                history.push('/');
               }}
               ref={logoElement}
               alt="logo"
