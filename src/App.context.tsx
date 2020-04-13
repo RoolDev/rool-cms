@@ -59,7 +59,7 @@ const appReducer = (state: State, action: Action): State => {
       return {
         ...state,
         accessToken: undefined,
-        accessTokenValidated: false,
+        accessTokenValidated: false
       };
     }
 
@@ -67,7 +67,7 @@ const appReducer = (state: State, action: Action): State => {
       return {
         ...state,
         accessToken: action.value,
-        accessTokenValidated: true,
+        accessTokenValidated: true
       };
 
     case 'setAuthTicket':
@@ -79,8 +79,8 @@ const appReducer = (state: State, action: Action): State => {
         ...state,
         user: {
           ...state.user,
-          auth_ticket: action.value,
-        },
+          auth_ticket: action.value
+        }
       };
 
     default:
@@ -92,7 +92,7 @@ export const AppProvider = ({ children }: ProviderProps) => {
   const [state, dispatch] = React.useReducer(appReducer, {
     user: undefined,
     accessToken: window.localStorage.getItem('accessToken') ?? undefined,
-    accessTokenValidated: false,
+    accessTokenValidated: false
   });
 
   return (
@@ -128,7 +128,7 @@ export const useApp = (): [State, Dispatch] => {
   return [useAppState(), useAppDispatch()];
 };
 
-export const AppTokenVerification: React.FC = (props) => {
+export const AppTokenVerification: React.FC = props => {
   const [state, dispatch] = useApp();
 
   const [isLoading, setIsLoading] = React.useState(true);
@@ -139,6 +139,7 @@ export const AppTokenVerification: React.FC = (props) => {
         dispatch(await AppActions.revalidateToken(state.accessToken));
       }
     } catch (e) {
+      dispatch(AppActions.removeAccessToken());
     } finally {
       setIsLoading(false);
     }
