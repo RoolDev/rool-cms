@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom';
  */
 import * as Sentry from '@sentry/browser';
 import { client } from './config/graphql';
-import { AppProvider } from './App.context';
+import { AppProvider, AppTokenVerification } from './App.context';
 import { ToastContainer, toast } from 'react-toastify';
 import { ApolloProvider } from '@apollo/client';
 
@@ -34,11 +34,13 @@ if (process.env.NODE_ENV === 'production') {
 ReactDOM.render(
   <React.StrictMode>
     <AppProvider>
-      <ApolloProvider client={client}>
-        <ToastContainer />
+      <AppTokenVerification>
+        <ApolloProvider client={client}>
+          <ToastContainer />
 
-        <Routes />
-      </ApolloProvider>
+          <Routes />
+        </ApolloProvider>
+      </AppTokenVerification>
     </AppProvider>
   </React.StrictMode>,
   document.getElementById('root')

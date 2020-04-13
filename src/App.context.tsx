@@ -3,6 +3,13 @@ import * as React from 'react';
 /**
  * Dependencies
  */
+import * as AppActions from './App.actions';
+import { useMount } from 'react-use';
+
+/**
+ * Components
+ */
+import LoadingSpinner from './components/spinner';
 
 /**
  * Models
@@ -119,4 +126,27 @@ export const useAppDispatch = () => {
 
 export const useApp = (): [State, Dispatch] => {
   return [useAppState(), useAppDispatch()];
+};
+
+export const AppTokenVerification: React.FC = (props) => {
+  const [state, dispatch] = useApp();
+
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  useMount(async () => {
+    try {
+      if (state.accessToken) {
+        dispatch(await AppActions.revalidateToken(state.accessToken));
+      }
+    } catch (e) {
+    } finally {
+      setIsLoading(false);
+    }
+  });
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  return <>{props.children}</>;
 };

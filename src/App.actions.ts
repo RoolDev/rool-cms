@@ -87,7 +87,7 @@ export const setAccessToken = (value: string): Action => {
 export const fetchUserDetails = async (
   accessToken: string
 ): Promise<IUserDetails> => {
-  const { id, isAdmin } = await AppService.decodeJWT(accessToken);
+  const { id, isAdmin } = await AppService.validateToken(accessToken);
   const user = await HomeService.getUserDetails(id, accessToken);
 
   return {

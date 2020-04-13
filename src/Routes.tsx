@@ -31,23 +31,25 @@ const ModalRoutes: React.FC = () => {
 const Routes: React.FC = () => {
   return (
     <Router>
-      <PrivateRoute exact path="/client" component={ClientPage} />
-      <PrivateRoute exact path="/client-dev" component={ClientDevPage} />
+      <Switch>
+        <PrivateRoute exact path="/client" component={ClientPage} />
+        <PrivateRoute exact path="/client-dev" component={ClientDevPage} />
 
-      <div className="bg-gray-300 min-h-screen flex flex-col animated fadeIn">
-        <div className="flex-grow">
-          <HomeHeader />
-          <NavigationWidget />
+        <div className="bg-gray-300 min-h-screen flex flex-col animated fadeIn">
+          <div className="flex-grow">
+            <HomeHeader />
+            <NavigationWidget />
 
-          <Switch>
-            <Route exact path="/" component={NewHome} />
-            <Route exact path="/articles/:slug?" component={Articles} />
-          </Switch>
+            <Switch>
+              <Route exact path="/" component={NewHome} />
+              <Route exact path="/articles/:slug?" component={Articles} />
+            </Switch>
+          </div>
+          <Footer />
+
+          <ModalRoutes />
         </div>
-        <Footer />
-
-        <ModalRoutes />
-      </div>
+      </Switch>
     </Router>
   );
 };
