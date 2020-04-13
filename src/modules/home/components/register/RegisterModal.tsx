@@ -177,7 +177,7 @@ const RegisterModal: React.FC<IProps> = (props) => {
             />
           </div>
 
-          <hr />
+          <hr className="mt-2 mb-2" />
 
           <div className="flex justify-end pt-2">
             <div>
