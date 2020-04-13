@@ -19,18 +19,17 @@ interface IProps {
     inputClassnames: string;
   }>;
 }
-const Input: React.FC<IProps> = props => {
+const Input: React.FC<IProps> = (props) => {
   const { name, type, label, placeholder: tip, styles } = props;
 
   return (
     <div
-      className={`flex flex-col justify-between ${styles?.containerClassnames ??
-        ''}`}
+      className={`flex flex-col justify-between ${
+        styles?.containerClassnames ?? ''
+      }`}
     >
       <div className="flex items-center">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          {label}
-        </label>
+        <label className="block text-sm font-bold mb-2">{label}</label>
       </div>
 
       <div>
@@ -49,8 +48,9 @@ const Input: React.FC<IProps> = props => {
             placeholder={tip}
             ref={props.componentRef}
             name={name}
-            className={`bg-gray-100 text-gray-600 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none ${styles?.inputClassnames ??
-              ''} ${props?.error ? 'border-red-400' : ''}`}
+            className={`bg-gray-100 text-gray-600 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none ${
+              styles?.inputClassnames ?? ''
+            } ${props?.error ? 'border-red-400' : ''}`}
             type={type}
           />
         </div>

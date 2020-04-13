@@ -10,12 +10,11 @@ import { HomeService } from './modules/home/home.service';
 import { Action } from './App.context';
 import { SigninUserDTO } from './modules/index/models/signin-user.dto';
 import { CreateUserDTO } from './modules/index/models/create-user.dto';
-import { User } from './modules/index/models/user';
+import { IUserDetails } from './modules/home/models/user-details';
 
 export const createUser = async (formData: CreateUserDTO): Promise<Action> => {
   const { accessToken } = await AppService.createUser(formData);
-
-  const user = await AppService.decodeJWT(accessToken);
+  const user = await fetchUserDetails(accessToken);
 
   window.localStorage.setItem('accessToken', accessToken);
 
@@ -23,8 +22,8 @@ export const createUser = async (formData: CreateUserDTO): Promise<Action> => {
     type: 'setAuth',
     value: {
       accessToken,
-      user
-    }
+      user,
+    },
   };
 };
 
@@ -32,7 +31,7 @@ export const authenticateUser = async (
   formData: SigninUserDTO
 ): Promise<Action> => {
   const { accessToken } = await AppService.authenticateUser(formData);
-  const user = await AppService.decodeJWT(accessToken);
+  const user = await fetchUserDetails(accessToken);
 
   window.localStorage.setItem('accessToken', accessToken);
 
@@ -40,32 +39,32 @@ export const authenticateUser = async (
     type: 'setAuth',
     value: {
       user,
-      accessToken
-    }
+      accessToken,
+    },
   };
 };
 
 export const revalidateToken = async (accessToken: string): Promise<Action> => {
-  const user = await AppService.validateToken(accessToken);
+  const user = await fetchUserDetails(accessToken);
 
   return {
     type: 'setAuth',
     value: {
       accessToken,
-      user
-    }
+      user,
+    },
   };
 };
 
 export const setAuthTicket = async (
-  user: User,
+  user: IUserDetails,
   accessToken: string
 ): Promise<Action> => {
   const { auth_ticket } = await HomeService.updateUserSSO(user.id, accessToken);
 
   return {
     type: 'setAuthTicket',
-    value: auth_ticket
+    value: auth_ticket,
   };
 };
 
@@ -74,13 +73,25 @@ export const removeAccessToken = (): Action => {
 
   return {
     type: 'removeAccessToken',
-    value: undefined
+    value: undefined,
   };
 };
 
 export const setAccessToken = (value: string): Action => {
   return {
     type: 'setAccessToken',
-    value
+    value,
+  };
+};
+
+export const fetchUserDetails = async (
+  accessToken: string
+): Promise<IUserDetails> => {
+  const { id, isAdmin } = await AppService.validateToken(accessToken);
+  const user = await HomeService.getUserDetails(id, accessToken);
+
+  return {
+    ...user,
+    isAdmin,
   };
 };

@@ -45,18 +45,27 @@ const ClientPage: React.FC = () => {
       url: 'assets/client/js/swfobject.js',
       callback: () => {
         setScriptLoaded(true);
-      }
+      },
     });
 
-    if (state.user && state.accessToken && !state.user?.auth_ticket) {
+    utils.loadDynamicScript({
+      scriptId: 'habboapi',
+      url: 'assets/client/js/habboapi.js',
+      callback: () => {},
+    });
+
+    if (state.user && state.accessToken) {
       dispatch(await AppActions.setAuthTicket(state.user, state.accessToken));
       setTokenUpdated(true);
     }
   });
 
   useUnmount(() => {
-    const el = document.getElementById('swfobject');
-    if (el) document.body.removeChild(el);
+    const swfobject = document.getElementById('swfobject');
+    const habboapi = document.getElementById('habboapi');
+
+    if (swfobject) swfobject.parentNode?.removeChild(swfobject);
+    if (habboapi) habboapi.parentNode?.removeChild(habboapi);
   });
 
   React.useEffect(() => {
@@ -69,14 +78,14 @@ const ClientPage: React.FC = () => {
 
     const settings = utils.generateClientSettings({
       url: config.url!,
-      swfUrl: config.swf.url!
+      swfUrl: config.swf.url!,
     });
 
     const vars = utils.generateClientVars({
       settings,
       ssoTicket: state.user.auth_ticket,
       ip: config.server.ip!,
-      port: config.server.port!
+      port: config.server.port!,
     });
 
     swfObject.embedSWF(
@@ -87,10 +96,10 @@ const ClientPage: React.FC = () => {
       '10.0.0',
       settings.baseSwf + 'expressInstall.swf',
       {
-        ...vars
+        ...vars,
       },
       {
-        ...settings.params
+        ...settings.params,
       },
       null
     );
@@ -103,11 +112,8 @@ const ClientPage: React.FC = () => {
   }
 
   return (
-    <>
-      <Helmet>
-        <title>Habbo Rool: Jogue agora!</title>
-        <script type="text/javascript" src="assets/client/js/habboapi.js" />
-      </Helmet>
+    <div id="game-client">
+      <Helmet title={'Habbo Rool: Jogar!'} />
 
       <div className="inline float-left m-2">
         <OnlineCounter mode="client" />
@@ -116,7 +122,7 @@ const ClientPage: React.FC = () => {
       <div id="client">
         <RequestFlashPlayer />
       </div>
-    </>
+    </div>
   );
 };
 

@@ -11,10 +11,10 @@ interface IProps {
   onExpired: () => void;
 }
 
-const RecaptchaContainer: React.FC<IProps> = props => {
+const RecaptchaContainer: React.FC<IProps> = (props) => {
   return (
     <ReCAPTCHA
-      theme="dark"
+      theme="light"
       onChange={props.onChange}
       onErrored={props.onErrored}
       onExpired={props.onExpired}

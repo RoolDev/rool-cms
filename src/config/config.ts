@@ -3,7 +3,8 @@ const {
   REACT_APP_SERVER_IP,
   REACT_APP_SERVER_PORT,
   REACT_APP_API_URL,
-  REACT_APP_SWF_URL
+  REACT_APP_SWF_URL,
+  REACT_APP_ARTICLES_GQL
 } = process.env;
 
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -19,5 +20,8 @@ export default {
   },
   api: {
     url: isDevelopment ? 'http://localhost:3001' : REACT_APP_API_URL
+  },
+  articlesGQL: {
+    url: isDevelopment ? 'http://localhost:1337/graphql' : REACT_APP_ARTICLES_GQL
   }
 };

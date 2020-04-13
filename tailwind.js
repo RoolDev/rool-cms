@@ -1,3 +1,5 @@
+const typography = require('tailwindcss-typography');
+
 module.exports = {
   prefix: '',
   important: false,
@@ -14,6 +16,8 @@ module.exports = {
 
       black: '#000',
       white: '#fff',
+      sGray: '#F6F6F6',
+      dGray: '#E8E8E8',
 
       gray: {
         100: '#f7fafc',
@@ -129,7 +133,11 @@ module.exports = {
     spacing: {
       px: '1px',
       '0': '0',
+      '0.1': '0.1rem',
+      '0.3': '0.3rem',
       '1': '0.25rem',
+      '1.5': '0.33rem',
+      '1.75': '0.40rem',
       '2': '0.5rem',
       '3': '0.75rem',
       '4': '1rem',
@@ -147,7 +155,7 @@ module.exports = {
       '56': '14rem',
       '64': '16rem',
     },
-    backgroundColor: theme => theme('colors'),
+    backgroundColor: (theme) => theme('colors'),
     backgroundPosition: {
       bottom: 'bottom',
       center: 'center',
@@ -164,7 +172,7 @@ module.exports = {
       cover: 'cover',
       contain: 'contain',
     },
-    borderColor: theme => ({
+    borderColor: (theme) => ({
       ...theme('colors'),
       default: theme('colors.gray.300', 'currentColor'),
     }),
@@ -186,10 +194,14 @@ module.exports = {
     boxShadow: {
       xs: '0 0 0 1px rgba(0, 0, 0, 0.05)',
       sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-      default: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-      md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-      lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-      xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+      default:
+        '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+      md:
+        '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+      lg:
+        '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      xl:
+        '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
       '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
       inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
       outline: '0 0 0 3px rgba(66, 153, 225, 0.5)',
@@ -239,7 +251,14 @@ module.exports = {
         '"Noto Color Emoji"',
       ],
       serif: ['Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
-      mono: ['Menlo', 'Monaco', 'Consolas', '"Liberation Mono"', '"Courier New"', 'monospace'],
+      mono: [
+        'Menlo',
+        'Monaco',
+        'Consolas',
+        '"Liberation Mono"',
+        '"Courier New"',
+        'monospace',
+      ],
     },
     fontSize: {
       xs: '0.75rem',
@@ -264,7 +283,7 @@ module.exports = {
       extrabold: '800',
       black: '900',
     },
-    height: theme => ({
+    height: (theme) => ({
       auto: 'auto',
       ...theme('spacing'),
       full: '100%',
@@ -371,8 +390,8 @@ module.exports = {
       '11': '11',
       '12': '12',
     },
-    padding: theme => theme('spacing'),
-    placeholderColor: theme => theme('colors'),
+    padding: (theme) => theme('spacing'),
+    placeholderColor: (theme) => theme('colors'),
     stroke: {
       current: 'currentColor',
     },
@@ -381,8 +400,8 @@ module.exports = {
       '1': '1',
       '2': '2',
     },
-    textColor: theme => theme('colors'),
-    width: theme => ({
+    textColor: (theme) => theme('colors'),
+    width: (theme) => ({
       auto: 'auto',
       ...theme('spacing'),
       '1/2': '50%',
@@ -423,7 +442,7 @@ module.exports = {
       '40': '40',
       '50': '50',
     },
-    gap: theme => theme('spacing'),
+    gap: (theme) => theme('spacing'),
     gridTemplateColumns: {
       none: 'none',
       '1': 'repeat(1, minmax(0, 1fr))',
@@ -576,7 +595,8 @@ module.exports = {
     transitionProperty: {
       none: 'none',
       all: 'all',
-      default: 'background-color, border-color, color, fill, stroke, opacity, box-shadow, transform',
+      default:
+        'background-color, border-color, color, fill, stroke, opacity, box-shadow, transform',
       colors: 'background-color, border-color, color, fill, stroke',
       opacity: 'opacity',
       shadow: 'box-shadow',
@@ -598,6 +618,144 @@ module.exports = {
       '700': '700ms',
       '1000': '1000ms',
     },
+    textIndent: {
+      // defaults to {}
+      '1': '0.25rem',
+      '2': '0.5rem',
+    },
+    textShadow: {
+      // defaults to {}
+      default: '0 2px 5px rgba(0, 0, 0, 0.5)',
+      lg: '0 2px 10px rgba(0, 0, 0, 0.5)',
+    },
+    fontVariantCaps: {
+      // defaults to these values
+      normal: 'normal',
+      small: 'small-caps',
+      'all-small': 'all-small-caps',
+      petite: 'petite-caps',
+      unicase: 'unicase',
+      titling: 'titling-caps',
+    },
+    fontVariantNumeric: {
+      // defaults to these values
+      normal: 'normal',
+      ordinal: 'ordinal',
+      'slashed-zero': 'slashed-zero',
+      lining: 'lining-nums',
+      oldstyle: 'oldstyle-nums',
+      proportional: 'proportional-nums',
+      tabular: 'tabular-nums',
+      'diagonal-fractions': 'diagonal-fractions',
+      'stacked-fractions': 'stacked-fractions',
+    },
+    fontVariantLigatures: {
+      // defaults to these values
+      normal: 'normal',
+      none: 'none',
+      common: 'common-ligatures',
+      'no-common': 'no-common-ligatures',
+      discretionary: 'discretionary-ligatures',
+      'no-discretionary': 'no-discretionary-ligatures',
+      historical: 'historical-ligatures',
+      'no-historical': 'no-historical-ligatures',
+      contextual: 'contextual',
+      'no-contextual': 'no-contextual',
+    },
+    textRendering: {
+      // defaults to these values
+      'rendering-auto': 'auto',
+      'optimize-legibility': 'optimizeLegibility',
+      'optimize-speed': 'optimizeSpeed',
+      'geometric-precision': 'geometricPrecision',
+    },
+    textStyles: (theme) => ({
+      // defaults to {}
+      heading: {
+        output: false, // this means there won't be a "heading" component in the CSS, but it can be extended
+        fontWeight: theme('fontWeight.bold'),
+        lineHeight: theme('lineHeight.tight'),
+      },
+      h1: {
+        extends: 'heading', // this means all the styles in "heading" will be copied here; "extends" can also be an array to extend multiple text styles
+        fontSize: theme('fontSize.5xl'),
+        '@screen sm': {
+          fontSize: theme('fontSize.6xl'),
+        },
+      },
+      h2: {
+        extends: 'heading',
+        fontSize: theme('fontSize.4xl'),
+        '@screen sm': {
+          fontSize: theme('fontSize.5xl'),
+        },
+      },
+      h3: {
+        extends: 'heading',
+        fontSize: theme('fontSize.4xl'),
+      },
+      h4: {
+        extends: 'heading',
+        fontSize: theme('fontSize.3xl'),
+      },
+      h5: {
+        extends: 'heading',
+        fontSize: theme('fontSize.2xl'),
+      },
+      h6: {
+        extends: 'heading',
+        fontSize: theme('fontSize.xl'),
+      },
+      link: {
+        fontWeight: theme('fontWeight.bold'),
+        color: theme('colors.blue.400'),
+        '&:hover': {
+          color: theme('colors.blue.600'),
+          textDecoration: 'underline',
+        },
+      },
+      richText: {
+        fontWeight: theme('fontWeight.normal'),
+        fontSize: theme('fontSize.base'),
+        lineHeight: theme('lineHeight.relaxed'),
+        '> * + *': {
+          marginTop: '1em',
+        },
+        h1: {
+          extends: 'h1',
+        },
+        h2: {
+          extends: 'h2',
+        },
+        h3: {
+          extends: 'h3',
+        },
+        h4: {
+          extends: 'h4',
+        },
+        h5: {
+          extends: 'h5',
+        },
+        h6: {
+          extends: 'h6',
+        },
+        ul: {
+          listStyleType: 'disc',
+        },
+        ol: {
+          listStyleType: 'decimal',
+        },
+        a: {
+          extends: 'link',
+        },
+        'b, strong': {
+          fontWeight: theme('fontWeight.bold'),
+        },
+        'i, em': {
+          fontStyle: 'italic',
+        },
+      },
+    }),
   },
   variants: {
     accessibility: ['responsive', 'focus'],
@@ -688,7 +846,17 @@ module.exports = {
     transitionProperty: ['responsive'],
     transitionTimingFunction: ['responsive'],
     transitionDuration: ['responsive'],
+    textIndent: ['responsive'],
+    textShadow: ['responsive'],
+    ellipsis: ['responsive'],
+    hyphens: ['responsive'],
+    kerning: ['responsive'],
+    textUnset: ['responsive'],
+    fontVariantCaps: ['responsive'],
+    fontVariantNumeric: ['responsive'],
+    fontVariantLigatures: ['responsive'],
+    textRendering: ['responsive'],
   },
   corePlugins: {},
-  plugins: [],
-}
+  plugins: [typography],
+};

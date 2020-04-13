@@ -3,11 +3,18 @@ import * as React from 'react';
 /**
  * Dependencies
  */
+import * as AppActions from './App.actions';
+import { useMount } from 'react-use';
+
+/**
+ * Components
+ */
+import LoadingSpinner from './components/spinner';
 
 /**
  * Models
  */
-import { User } from './modules/index/models/user';
+import { IUserDetails } from './modules/home/models/user-details';
 
 /**
  * Types
@@ -27,7 +34,7 @@ export type Action = {
 type Dispatch = (action: Action) => void;
 
 type State = Partial<{
-  user: User;
+  user: IUserDetails;
   accessToken: string;
   accessTokenValidated: boolean;
 }>;
@@ -52,7 +59,7 @@ const appReducer = (state: State, action: Action): State => {
       return {
         ...state,
         accessToken: undefined,
-        accessTokenValidated: false
+        accessTokenValidated: false,
       };
     }
 
@@ -60,7 +67,7 @@ const appReducer = (state: State, action: Action): State => {
       return {
         ...state,
         accessToken: action.value,
-        accessTokenValidated: true
+        accessTokenValidated: true,
       };
 
     case 'setAuthTicket':
@@ -72,8 +79,8 @@ const appReducer = (state: State, action: Action): State => {
         ...state,
         user: {
           ...state.user,
-          auth_ticket: action.value
-        }
+          auth_ticket: action.value,
+        },
       };
 
     default:
@@ -85,7 +92,7 @@ export const AppProvider = ({ children }: ProviderProps) => {
   const [state, dispatch] = React.useReducer(appReducer, {
     user: undefined,
     accessToken: window.localStorage.getItem('accessToken') ?? undefined,
-    accessTokenValidated: false
+    accessTokenValidated: false,
   });
 
   return (
@@ -119,4 +126,27 @@ export const useAppDispatch = () => {
 
 export const useApp = (): [State, Dispatch] => {
   return [useAppState(), useAppDispatch()];
+};
+
+export const AppTokenVerification: React.FC = (props) => {
+  const [state, dispatch] = useApp();
+
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  useMount(async () => {
+    try {
+      if (state.accessToken) {
+        dispatch(await AppActions.revalidateToken(state.accessToken));
+      }
+    } catch (e) {
+    } finally {
+      setIsLoading(false);
+    }
+  });
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  return <>{props.children}</>;
 };
