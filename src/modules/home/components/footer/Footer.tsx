@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="bg-white border border-dGray text-2xl p-5">
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row-reverse justify-between">
         <div>
           <p className="text-lg font-semibold">RoolCMS</p>
           <p className="text-sm font-light">
@@ -35,14 +35,16 @@ const Footer: React.FC = () => {
           </div>
         </div>
         <div className="flex flex-col">
-          <p className="font-semibold text-lg">Sociais</p>
+          <p className="font-semibold text-lg">
+            Você também pode nos encontrar...
+          </p>
           <a
             className="text-sm"
             href="https://facebook.com/habborool"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Facebook
+            No Facebook
           </a>
           <a
             className="text-sm"
@@ -50,7 +52,7 @@ const Footer: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Discord
+            No Discord ;)
           </a>
         </div>
       </div>
