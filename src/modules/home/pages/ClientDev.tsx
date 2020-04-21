@@ -17,6 +17,7 @@ import { useApp } from '../../../App.context';
  */
 import LoadingSpinner from '../../../components/spinner';
 import RequestFlashPlayer from '../components/RequestFlashPlayer';
+import OnlineCounter from '../../../components/online-counter';
 
 /**
  * Styles
@@ -32,7 +33,7 @@ declare global {
   }
 }
 
-const ClientDevPage: React.FC = () => {
+const ClientPage: React.FC = () => {
   const [state, dispatch] = useApp();
 
   const [scriptLoaded, setScriptLoaded] = React.useState<boolean>(false);
@@ -44,18 +45,27 @@ const ClientDevPage: React.FC = () => {
       url: 'assets/client/js/swfobject.js',
       callback: () => {
         setScriptLoaded(true);
-      }
+      },
     });
 
-    if (state.user && state.accessToken && !state.user?.auth_ticket) {
+    utils.loadDynamicScript({
+      scriptId: 'habboapi',
+      url: 'assets/client/js/habboapi.js',
+      callback: () => {},
+    });
+
+    if (state.user && state.accessToken) {
       dispatch(await AppActions.setAuthTicket(state.user, state.accessToken));
       setTokenUpdated(true);
     }
   });
 
   useUnmount(() => {
-    const el = document.getElementById('swfobject');
-    if (el) document.body.removeChild(el);
+    const swfobject = document.getElementById('swfobject');
+    const habboapi = document.getElementById('habboapi');
+
+    if (swfobject) swfobject.parentNode?.removeChild(swfobject);
+    if (habboapi) habboapi.parentNode?.removeChild(habboapi);
   });
 
   React.useEffect(() => {
@@ -68,28 +78,28 @@ const ClientDevPage: React.FC = () => {
 
     const settings = utils.generateClientSettings({
       url: config.url!,
-      swfUrl: 'http://localhost:5000/swf'
+      swfUrl: config.swf.url!,
     });
 
     const vars = utils.generateClientVars({
       settings,
       ssoTicket: state.user.auth_ticket,
-      ip: config.server.ip!,
-      port: config.server.port!
+      ip: 'localhost',
+      port: '5000',
     });
 
     swfObject.embedSWF(
-      settings.baseSwf + '_R.swf',
+      settings.baseSwf + 'Habbo.swf',
       'client',
       '100%',
       '100%',
       '10.0.0',
       settings.baseSwf + 'expressInstall.swf',
       {
-        ...vars
+        ...vars,
       },
       {
-        ...settings.params
+        ...settings.params,
       },
       null
     );
@@ -102,16 +112,18 @@ const ClientDevPage: React.FC = () => {
   }
 
   return (
-    <>
-      <Helmet>
-        <title>Habbo Rool: Dev mode</title>
-      </Helmet>
+    <div id="game-client">
+      <Helmet title={'Habbo Rool: Jogar!'} />
+
+      <div className="inline float-left m-2">
+        <OnlineCounter mode="client" />
+      </div>
 
       <div id="client">
         <RequestFlashPlayer />
       </div>
-    </>
+    </div>
   );
 };
 
-export default ClientDevPage;
+export default ClientPage;
