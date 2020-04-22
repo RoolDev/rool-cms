@@ -80,6 +80,7 @@ export const generateClientVars = ({
     'productdata.load.url': settings.productData,
     'furnidata.load.url': settings.furniData,
     'flash.client.url': settings.baseSwf,
+    'base.swf.url': settings.baseUrl,
     'sso.ticket': ssoTicket,
   });
 

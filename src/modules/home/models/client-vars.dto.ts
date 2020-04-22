@@ -18,6 +18,7 @@ export class ClientVarsDTO {
   'processlog.enabled': '0' | '1';
   'client.starting.revolving': string;
   'flash.client.origin': 'popup';
+  'base.swf.url': string;
 
   constructor(params: Partial<ClientVarsDTO>) {
     this['use.sso.ticket'] = '1';
