@@ -65,6 +65,37 @@
       src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
     ></script>
 
+    <script type="text/javascript">
+      (function () {
+        if (typeof window.FlashExternalGameInterface === 'undefined') {
+          window.FlashExternalGameInterface = {};
+        }
+        window.FlashExternalGameInterface.showGame = function (gameurl) {
+          var frame = document.createElement('iframe');
+          frame.src = gameurl;
+          frame.style.position = 'absolute';
+          frame.style.top = '0';
+          frame.style.left = '0';
+          frame.width = '100%';
+          frame.height = '100%';
+          frame.style.bottom = '0';
+          frame.style.right = '0';
+          frame.style.height = '100%';
+          frame.style.width = '100%';
+          frame.style.zIndex = '99999';
+          frame.frameBorder = 0;
+          var loadTimes = 0;
+          frame.onload = function (a) {
+            loadTimes++;
+            if (loadTimes > 1) {
+              frame.remove();
+            }
+          };
+          window.document.body.appendChild(frame);
+        };
+      })();
+    </script>
+
     <title>
       Habbo Rool: Seja bem vindo!
     </title>
