@@ -40,7 +40,7 @@ const HomeHeader: React.FC = () => {
               }}
               ref={logoElement}
               alt="logo"
-              src="/assets/images/logo.png"
+              src="/assets/images/new-logo.png"
             />
           </div>
           <div
