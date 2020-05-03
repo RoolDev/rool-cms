@@ -89,7 +89,7 @@ const ClientPage: React.FC = () => {
     });
 
     swfObject.embedSWF(
-      settings.baseSwf + 'Dev.swf',
+      settings.baseSwf + 'Habbo.swf',
       'client',
       '100%',
       '100%',
