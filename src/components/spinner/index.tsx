@@ -10,7 +10,7 @@ const LoadingSpinner: React.FC = () => {
     <div className="flex items-center justify-center h-screen bg-blue-900 animated fadeOut slow">
       <img
         className="animated rubberBand infinite slow"
-        src="/assets/images/logo.png"
+        src="/assets/images/new-logo.png"
         alt="logo"
       />
     </div>
