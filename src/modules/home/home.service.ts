@@ -9,6 +9,8 @@ import { AppService } from '../../index.service';
  * Models
  */
 import { IUserDetails, IUserCurrencies } from './models/user-details';
+import { RecoverPasswordDTO } from './models/recover-password.dto';
+import { ChangePasswordDTO } from './models/change-password.dto';
 
 class Service {
   constructor(private instance: AxiosInstance) {}
@@ -76,6 +78,40 @@ class Service {
 
     return result;
   }
+
+  async recoverPassword(
+    payload: RecoverPasswordDTO
+  ): Promise<string>{
+    try {
+      const response = await this.instance.post('/users/recover', {
+        ...payload
+      });
+
+      console.log(response.statusText);
+      return response.statusText;
+
+    } catch(err){
+      throw(err)
+    }
+  }
+
+  async changePassword(
+    payload: ChangePasswordDTO,
+    token: string
+  ): Promise<string> {
+
+    try {
+      const response = await this.instance.post('/users/recover/changePassword', {
+        ...payload,
+        token
+      });
+  
+      return response.statusText;
+      
+    } catch(err){
+      throw(err)
+    }
+  }
 }
 
 export const HomeService = new Service(
@@ -83,3 +119,4 @@ export const HomeService = new Service(
     baseURL: `${config.api.url}`,
   })
 );
+
