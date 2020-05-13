@@ -18,8 +18,6 @@ import Articles from './modules/home/pages/Articles';
 import Footer from './modules/home/components/footer/Footer';
 import LoginModal from './modules/home/components/login/LoginModal';
 import RegisterModal from './modules/home/components/register/RegisterModal';
-import RecoverPasswordModal from './modules/home/components/recover-password/RecoverPasswordModal';
-import ChangePasswordModal from './modules/home/components/change-password/ChangePasswordModal';
 
 const ModalRoutes: React.FC = () => {
   return (
@@ -45,9 +43,6 @@ const Routes: React.FC = () => {
             <Switch>
               <Route exact path="/" component={NewHome} />
               <Route exact path="/articles/:slug?" component={Articles} />
-              <Route exact path="/recover" component={RecoverPasswordModal} />
-              <Route exact path="/recover/changePassword" component={ChangePasswordModal} />
-
             </Switch>
           </div>
           <Footer />
