@@ -7,6 +7,9 @@ import { ChangePasswordDTO } from '../../models/change-password.dto';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { HomeService } from '../../../home/home.service';
+import { useMount } from 'react-use';
+import { useApp } from '../../../../App.context';
+
 
 /** Components
  * 
@@ -18,6 +21,8 @@ import { Lock } from 'react-feather';
 import { toast } from 'react-toastify';
 import { findErrors } from '../../utils';
 import { useLocation } from 'react-use';
+import RecaptchaContainer from '../../../../components/recaptcha';
+import LoadingSpinner from '../../../../components/spinner';
 
 
 const ChangePasswordModal: React.FC = (props) => {
@@ -28,9 +33,19 @@ const ChangePasswordModal: React.FC = (props) => {
   }
 
   const query = useQuery();
-
   const history = useHistory();
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [state] = useApp();
+
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
+  const [isMounting, setIsMounting] = React.useState(true);
+  const [recaptchaToken, setRecaptchaToken] = React.useState<string>('');
+
+  useMount(() => {
+    if (state.accessToken) {
+      history.push('/');
+    }
+    setIsMounting(false);
+  });
 
   const isDisabled = isLoading;
   const disabledCSS = isDisabled ? 'opacity-50 cursor-not-allowed' : '';
@@ -38,7 +53,6 @@ const ChangePasswordModal: React.FC = (props) => {
   const onSubmit = async (data: Record<string, string>) => {
 
     try {
-      setIsLoading(true);
 
       const key = query.get("token");
 
@@ -47,9 +61,9 @@ const ChangePasswordModal: React.FC = (props) => {
         return;
       }
 
-      const formData = new ChangePasswordDTO(data);
+      const formData = new ChangePasswordDTO({...data, recaptchaToken});
       
-      await HomeService.changePassword(formData, key);
+      await HomeService.changePassword(formData, key, recaptchaToken);
 
       toast.success('Senha alterada com sucesso!');
 
@@ -78,6 +92,22 @@ const ChangePasswordModal: React.FC = (props) => {
   const _goBack = () => {
     history.push('/');
   };
+
+  const _handleCaptcha = (value: string | null) => {
+    if (recaptchaToken && value === null) return setRecaptchaToken('');
+    if (value === null) return;
+
+    setIsLoading(false);
+    setRecaptchaToken(value);
+  };
+
+  const _handleRecaptchaError = () => {
+    setRecaptchaToken('');
+  };
+
+  if (isMounting) {
+    return <LoadingSpinner />;
+  }
 
   return (
    <Modal>
@@ -121,7 +151,14 @@ const ChangePasswordModal: React.FC = (props) => {
               }}
             />
           </div>
-          <div className="flex items-center justify-center">
+          <div className="flex justify-center mt-5">
+              <RecaptchaContainer
+                onErrored={_handleRecaptchaError}
+                onExpired={_handleRecaptchaError}
+                onChange={_handleCaptcha}
+              />
+            </div>
+          <div className="flex items-center justify-center mt-4" >
             <div className='pl-50%'>
             <button
                   className={`text-center focus:outline-none modal-close px-4 p-3 text-center rounded-lg text-white bg-blue-600 hover:bg-blue-800 ${disabledCSS}`}

@@ -80,14 +80,15 @@ class Service {
   }
 
   async recoverPassword(
-    payload: RecoverPasswordDTO
+    payload: RecoverPasswordDTO,
+    recaptchaToken: string
   ): Promise<string>{
     try {
       const response = await this.instance.post('/users/recover', {
-        ...payload
+        ...payload,
+        recaptchaToken
       });
 
-      console.log(response.statusText);
       return response.statusText;
 
     } catch(err){
@@ -97,13 +98,15 @@ class Service {
 
   async changePassword(
     payload: ChangePasswordDTO,
-    token: string
+    token: string,
+    recaptchaToken: string
   ): Promise<string> {
 
     try {
       const response = await this.instance.post('/users/recover/changePassword', {
         ...payload,
-        token
+        token,
+        recaptchaToken,
       });
   
       return response.statusText;
