@@ -35,15 +35,29 @@ const NotAuthenticatedWidget: React.FC = () => {
         <p className="text-white p-2 text-shadow antialiased subpixel-antialiased">
           ou
         </p>
+         <div className="flex">
+           <div className="flex-1 ml-1">
+            <Link
+              className="bg-blue-600 hover:bg-blue-800 rounded text-white font-bold rounded w-48 h-12 transition ease-in-out duration-300 flex justify-center items-center flex-col"
+              to={{
+                pathname: '/login',
+              }}
+            >
+              <p className="text-base">Acesse sua conta!</p>
+            </Link>
+          </div> 
+          <div className="flex-1 ml-1"> 
+            <Link
+              className="bg-gray-700 hover:bg-gray-900 rounded text-white font-bold rounded w-48 h-12 transition ease-in-out duration-300 flex justify-center items-center flex-col"
+              to={{
+                pathname: '/recover',
+              }}
+            >
+              <p className="text-base">Esqueci minha senha</p>
+            </Link>
+          </div>
+        </div>
 
-        <Link
-          className="bg-blue-600 hover:bg-blue-800 rounded text-white font-bold rounded w-48 h-12 transition ease-in-out duration-300 flex justify-center items-center flex-col"
-          to={{
-            pathname: '/login',
-          }}
-        >
-          <p className="text-base">Acesse sua conta!</p>
-        </Link>
       </div>
     </div>
   );
