@@ -45,15 +45,19 @@ const NavigationWidget: React.FC = () => {
                 width: '300px',
               }}
             >
-              <div className="flex">
-                <div className="mr-1">
-                {user && <NavigationJoinButton />}
-                </div>
-                <div>
-                {user && <NavigationLogoutButton />}
-                </div>
-              </div>
-              
+            {
+              user && (
+                <>
+                  <div className="flex">
+                    <div className="mr-1">
+                      {user && <NavigationJoinButton />}
+                    </div>
+                    <div>
+                      {user && <NavigationLogoutButton />}
+                    </div>
+                  </div>
+              </>)
+            }
             </div>
           </div>
         </div>
