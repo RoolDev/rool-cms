@@ -24,7 +24,8 @@ type Types =
   | 'setUser'
   | 'setAccessToken'
   | 'setAuthTicket'
-  | 'removeAccessToken';
+  | 'removeAccessToken'
+  | 'resetContext';
 
 export type Action = {
   type: Types;
@@ -82,6 +83,14 @@ const appReducer = (state: State, action: Action): State => {
           auth_ticket: action.value
         }
       };
+
+      case 'resetContext':
+        return {
+          ...state,
+          accessToken: undefined,
+          accessTokenValidated: false,
+          user: undefined,
+        }
 
     default:
       throw new Error(`Action ${action.type} not found.`);
