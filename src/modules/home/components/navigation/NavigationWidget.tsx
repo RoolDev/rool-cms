@@ -11,6 +11,7 @@ import { useAppState } from '../../../../App.context';
  */
 import NavigationItem from './NavigationItem';
 import NavigationJoinButton from './NavigationJoinButton';
+import NavigationLogoutButton  from './NavigationLogoutButton'
 
 const NavigationWidget: React.FC = () => {
   const { pathname } = useLocation();
@@ -44,7 +45,15 @@ const NavigationWidget: React.FC = () => {
                 width: '300px',
               }}
             >
-              {user && <NavigationJoinButton />}
+              <div className="flex">
+                <div className="mr-1">
+                {user && <NavigationJoinButton />}
+                </div>
+                <div>
+                {user && <NavigationLogoutButton />}
+                </div>
+              </div>
+              
             </div>
           </div>
         </div>

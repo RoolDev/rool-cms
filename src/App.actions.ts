@@ -95,3 +95,12 @@ export const fetchUserDetails = async (
     isAdmin,
   };
 };
+
+export const signoutUser = (): Action => {
+
+  return {
+    type: 'resetContext',
+    value: undefined,
+  }
+
+}
