@@ -50,10 +50,10 @@ const NavigationWidget: React.FC = () => {
                 <>
                   <div className="flex">
                     <div className="mr-1">
-                      {user && <NavigationJoinButton />}
+                      <NavigationJoinButton />
                     </div>
                     <div>
-                      {user && <NavigationLogoutButton />}
+                      <NavigationLogoutButton />
                     </div>
                   </div>
               </>)
