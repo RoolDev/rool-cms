@@ -102,6 +102,5 @@ export const signoutUser = (): Action => {
   return {
     type: 'resetContext',
     value: undefined,
-  }
-
-}
+  };
+};
