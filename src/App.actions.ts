@@ -97,6 +97,7 @@ export const fetchUserDetails = async (
 };
 
 export const signoutUser = (): Action => {
+  window.localStorage.removeItem('accessToken');
 
   return {
     type: 'resetContext',
